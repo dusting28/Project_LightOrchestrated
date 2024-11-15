@@ -1,0 +1,21 @@
+About the CSV files:
+	"COMSOL_MagnetForce.csv"
+		Turns: 500
+		Moving Mass: Magnet (Remanent flux density = 1)
+		Core: Ferrite (Relative Permeability = 10)
+		Current: 0.13 A
+	"COMSOL_MagnetForce2.csv"
+		Turns: 500
+		Moving Mass: Magnet (Remanent flux density = 1)
+		Core: Ferrite (Relative Permeability = 10)
+		Current: 1.3 A
+	"COMSOL_Reluctance10.csv"*
+		Turns: 500
+		Moving Mass: Ferrite (Relative Permeability = 10)
+		Core: Ferrite (Relative Permeability = 10)
+		Current: 0.13 A
+	"COMSOL_Reluctance5000.csv"*
+		Turns: 500
+		Moving Mass: Permalloy (Relative Permeability = 5000)
+		Core: Ferrite (Relative Permeability = 10)
+		Current: 0.13 A
