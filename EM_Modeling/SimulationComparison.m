@@ -3,6 +3,8 @@ clear; clc, close all;
 
 %% Load Data
 
+% Testing
+
 Component = "LQW15CN3R3M10D";
 COMSOL_Data_Off = readmatrix(strcat("COMSOL_",Component,"_Magnet_0mA.csv"));
 COMSOL_Data_On = readmatrix(strcat("COMSOL_",Component,"_Magnet_110mA.csv"));
