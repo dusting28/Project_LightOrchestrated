@@ -9,9 +9,9 @@ ForceData.numMeasurements = 30;
 ForceData.spacing = 500;
 ForceData.spacing = ForceData.spacing * (1/10000);  % convert to mm
 ForceData.polarity = ["None", "Positive", "Negative"];
-ForceData.current = .5;
-ForceData.inductorID = "02";
-ForceData.movingMass = "Magnet";
+ForceData.current = .35;
+ForceData.inductorID = "11";
+ForceData.movingMass = "Iron"; % Magnet or Iron
 
 %% NI Card Setup
 dev_num = 'Dev1';
