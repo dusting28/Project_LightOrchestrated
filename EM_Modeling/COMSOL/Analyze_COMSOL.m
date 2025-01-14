@@ -2,50 +2,23 @@
 clear; clc, close all;
 
 %% Load Data
-raw_data = readmatrix("COMSOL_MagnetForce.csv");
+addpath("COMSOL_Data")
+inductorID = "12";
+movingMass = "MediumMagnet";
+comsol_data = readmatrix(strcat("COMSOL_Data/Inductor",inductorID,"_",movingMass,".csv"));
 
-%% Plot Data
+current = comsol_data(1:3,2);
+location = comsol_data(1:3:end,1);
+force = zeros(length(current),length(location));
+
+color = ["b","k","r"];
 figure;
-for iter1 = [5, 7]
-    location = raw_data(iter1:9:end,1) - .35/2;
-    force = raw_data(iter1:9:end,4);
-    plot(location(2:end-1),force(2:end-1));
-    disp(strcat("Work: ", num2str(mean(force(2:end-1))*.35), " mJ"));
-    xline(0);
-    yline(0);
+for iter1 = 1:3
+    force(iter1,:) = 1000*comsol_data(iter1:3:end,3)';
+    plot(location(2:end), force(iter1,2:end),strcat(color(iter1),"."))
     hold on;
 end
-
-raw_data = readmatrix("COMSOL_MagnetForce2.csv");
-for iter1 = 7
-    location = raw_data(iter1:9:end,1) - .35/2;
-    force = raw_data(iter1:9:end,4);
-    plot(location(2:end-1),force(2:end-1));
-    disp(strcat("Work: ", num2str(mean(force(2:end-1))*.35), " mJ"));
-    xline(0);
-    yline(0);
-    hold on;
-end
+hold off;
 
 figure;
-raw_data = readmatrix("COMSOL_Reluctance10.csv");
-for iter1 = 8
-    location = raw_data(iter1:9:end,1) - .35/2;
-    force = raw_data(iter1:9:end,4);
-    plot(location(2:end-1),force(2:end-1));
-    disp(strcat("Work: ", num2str(mean(force(2:end-1))*.35), " mJ"));
-    xline(0);
-    yline(0);
-    hold on;
-end
-
-raw_data = readmatrix("COMSOL_Reluctance5000.csv");
-for iter1 = 8
-    location = raw_data(iter1:9:end,1) - .35/2;
-    force = raw_data(iter1:9:end,4);
-    plot(location(2:end-1),force(2:end-1));
-    disp(strcat("Work: ", num2str(mean(force(2:end-1))*.35), " mJ"));
-    xline(0);
-    yline(0);
-    hold on;
-end
+plot(location(2:end), (force(3,2:end)-force(1,2:end))/2)
