@@ -1,6 +1,6 @@
-% Model,COMSOL_Inductor24_Design5.mph
+% Model,COMSOL_Inductor24_RingMagnet.mph
 % Version,COMSOL 6.2.0.290
-% Date,"Dec 19 2024, 16:34"
+% Date,"Jan 15 2025, 14:52"
 % Table,Table 1 - Global Evaluation 1
 % Position (mm),Current (A),"Electromagnetic force, z component (N)"
 0,-0.29,-0.38481120333097163
