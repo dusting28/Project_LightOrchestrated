@@ -4,7 +4,7 @@ clc; clear; close all;
 %% Load Data
 addpath("Data")
 inductorID = "12";
-movingMass = "Magnet";
+movingMass = "1007Magnetx4";
 load(strcat("Data/Inductor",inductorID,"_",movingMass,".mat"))
 
 x = (0:ForceData.numMeasurements-1)*ForceData.spacing;

@@ -4,7 +4,7 @@ clear; clc, close all;
 %% Load Data
 addpath("COMSOL_Data")
 inductorID = "12";
-movingMass = "MediumMagnet";
+movingMass = "Magnet3x4";
 comsol_data = readmatrix(strcat("COMSOL_Data/Inductor",inductorID,"_",movingMass,".csv"));
 
 current = comsol_data(1:3,2);
