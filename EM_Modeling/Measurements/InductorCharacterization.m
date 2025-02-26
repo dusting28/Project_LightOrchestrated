@@ -5,13 +5,13 @@ clc; clearvars -except zero_force; close all;
 %% Params
 ForceData.fs = 10000; % Hz
 ForceData.len = 7; % Sec
-ForceData.numMeasurements = 30;
+ForceData.numMeasurements = 90;
 ForceData.spacing = 500;
 ForceData.spacing = ForceData.spacing * (1/10000);  % convert to mm
 ForceData.polarity = ["None", "Positive", "Negative"];
-ForceData.current = .35;
-ForceData.inductorID = "11";
-ForceData.movingMass = "Iron"; % Magnet or Iron
+ForceData.current = .7;
+ForceData.inductorID = "29";
+ForceData.movingMass = "1007Magnetx4"; % Magnet or Iron
 
 %% NI Card Setup
 dev_num = 'Dev1';
