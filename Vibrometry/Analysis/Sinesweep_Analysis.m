@@ -2,7 +2,7 @@ clc; clear; close all;
 
 addpath(fullfile('..', 'Data'));
 
-actuator = "10mm";
+actuator = "4mm";
 filename = strcat("Sinesweep_",actuator,".mat");
 
 vibrometry_data = load(filename);
@@ -24,10 +24,15 @@ mean_signal = squeeze(mean(signal_matrix,2));
 figure;
 plot(t,mean_signal);
 
+lower_freq = 20;
+upper_freq = 500;
+
 [freq,coef] = fft_spectral(mean_signal,vibrometry_data.MeasurementSignal.fs);
-scaling_factor = max(mean_signal)/max(abs(coef));
+[~,lower_idx] = min(abs(freq-lower_freq));
+[~,upper_idx] = min(abs(freq-upper_freq));
+scaling_factor = max(mean_signal)/max(abs(coef(lower_idx:upper_idx)));
 figure;
 semilogy(freq,scaling_factor*abs(coef));
 figure;
 plot(freq,1000*scaling_factor*abs(coef)./(2*pi*freq));
-xlim([20, 500]);
+xlim([lower_freq, upper_freq]);
