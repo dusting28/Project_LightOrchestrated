@@ -3,8 +3,8 @@ format longg
 clc; clearvars -except zero_force; close all;
 
 %% Params
-f1 = 10;
-f2 = 60;
+pulseLen = 1/60;
+dutyCycle = .05;
 fs = 10000; % Hz
 len = 10; % Sec
 
@@ -29,27 +29,18 @@ input('Configure power supply. Press any key to continue: ', 's');
 
 %% Generate Square Wave Sweep
 t = linspace(0, len, len*fs);
-fSweep = linspace(f1, f2, length(t));
 signal = zeros(length(t),4);
-positive = [1,1,0,0];
-negative = [0,0,1,1];
+positive = [0,0,1,1];
 
-periodCount = 0;
-polarityCount = 0;
+cycleLen = round((pulseLen/dutyCycle)*fs);
 changeIdx = [];
 for iter1 = 1:length(t)
-    if periodCount <= 0
-        periodCount = fs/fSweep(iter1)/2;
-        polarityCount = polarityCount+1;
+    if mod(iter1,cycleLen) < round(pulseLen*fs) 
+        signal(iter1,:) = [0 0 1 1];
+    end
+    if or(mod(iter1,cycleLen) == 1, mod(iter1,cycleLen) == round(pulseLen*fs))
         changeIdx = [changeIdx, iter1];
     end
-
-    if mod(polarityCount,2)
-        signal(iter1,:) = positive;
-    else
-        signal(iter1,:) = negative;
-    end
-    periodCount = periodCount-1;
 end
 
 %% Plot Signal
@@ -77,3 +68,4 @@ while toc < len
 end 
 write(daq_out,[0,0,0,0])
 toc
+disp("Here")

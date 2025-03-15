@@ -4,13 +4,15 @@ clc; clearvars -except zero_force; close all;
 
 %% Params
 ForceData.fs = 10000; % Hz
-ForceData.len = 7; % Sec
-ForceData.numMeasurements = 90;
-ForceData.spacing = 500;
+ForceData.prePause = 1; % Sec
+ForceData.pulseLen = 1/60; % Sec
+ForceData.postPause = 2; % Sec
+ForceData.numMeasurements = 15;
+ForceData.spacing = 2500;
 ForceData.spacing = ForceData.spacing * (1/10000);  % convert to mm
-ForceData.polarity = ["None", "Positive", "Negative"];
-ForceData.current = 2.75;
-ForceData.inductorID = "33";
+ForceData.triggerVoltage = [10];
+ForceData.powerVoltage = 3.9;
+ForceData.inductorID = "12";
 ForceData.movingMass = "Magnet3x4"; % Magnet or Iron
 
 %% NI Card Setup
@@ -25,20 +27,13 @@ daq_out = daq('ni');
 daq_out.Rate = ForceData.fs;
 
 linearStagePort = "Port0/Line0";
-polarityPort1 = "Port0/Line1";
-polarityPort2 = "Port0/Line2";
-polarityPort3 = "Port0/Line3";
-polarityPort4 = "Port0/Line4";
 linearStageTrigger = addoutput(daq_out,dev_num,linearStagePort,'Digital');
-polarityTrigger1 = addoutput(daq_out,dev_num,polarityPort1,'Digital');
-polarityTrigger2 = addoutput(daq_out,dev_num,polarityPort2,'Digital');
-polarityTrigger3 = addoutput(daq_out,dev_num,polarityPort3,'Digital');
-polarityTrigger4 = addoutput(daq_out,dev_num,polarityPort4,'Digital');
+analogOutput = addoutput(daq_out,dev_num,"ao0",'Voltage');
+
 
 %% Set Up DC Power Supply
-write(daq_out,[0,0,0,1,1])
+write(daq_out,[0,0])
 input('Configure power supply. Press any key to continue: ', 's'); 
-write(daq_out,[0,0,0,0,0])
 
 %% Zero Force Sensor
 if not(exist('zero_force', 'var'))
@@ -67,28 +62,33 @@ close all;
 
 
 %% Main Measurement Loop
-digitOutput = [0,0,0,0,0; 0,1,1,0,0; 0,0,0,1,1];
-ForceData.measurements = cell(length(ForceData.polarity),length(ForceData.numMeasurements));
+ForceData.measurements = cell(length(ForceData.triggerVoltage),length(ForceData.numMeasurements));
 for iter1 = 1:ForceData.numMeasurements
     % Take Measurements
-    for iter2 = 1:3
-        write(daq_out,digitOutput(iter2,:))
-        disp(strcat("Trial ",num2str(iter1),": ",ForceData.polarity(iter2)))
-        recordedData = read(daq_in,ForceData.len*ForceData.fs,'OutputFormat','Matrix');
-        force_data = 1000*(2.5/5)*(recordedData(:,1)-zero_force);
+    for iter2 = 1:length(ForceData.triggerVoltage)
+        disp(strcat("Trial ",num2str(iter1),": ",num2str(ForceData.triggerVoltage(iter2)),"V"))
+        write(daq_out,[0,0])
+        recordedData1 = read(daq_in,round(ForceData.prePause*ForceData.fs),'OutputFormat','Matrix');
+        write(daq_out,[0,ForceData.triggerVoltage(iter2)]);
+        recordedData2 = read(daq_in,round(ForceData.pulseLen*ForceData.fs),'OutputFormat','Matrix');
+        write(daq_out,[0,0])
+        recordedData3 = read(daq_in,round(ForceData.postPause*ForceData.fs),'OutputFormat','Matrix');
+
+        recordedData = [recordedData1(:,1); recordedData2(:,1); recordedData3(:,1)];
+        force_data = 1000*(2.5/5)*(recordedData-zero_force);
         ForceData.measurements{iter1,iter2} = force_data;
-        plot(movmean(force_data,1000));
+        plot(movmean(force_data,50));
         hold on;
-        write(daq_out,[0,0,0,0,0])
-        pause(5)
+        write(daq_out,[0,0])
+        pause(1)
     end
     hold off;
 
     % Move Linear Stage 
-    write(daq_out,[1,0,0,0,0])
+    write(daq_out,[1,0])
     pause(.5)
-    write(daq_out,[0,0,0,0,0])
-    pause(1)
+    write(daq_out,[0,0])
+    pause(3)
 end
 
-save(strcat("Inductor",ForceData.inductorID,"_",ForceData.movingMass,".mat"), "ForceData")
+save(strcat("Pulsed_Inductor",ForceData.inductorID,"_",ForceData.movingMass,".mat"), "ForceData")
