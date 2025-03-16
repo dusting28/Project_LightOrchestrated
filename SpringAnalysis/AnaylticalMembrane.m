@@ -4,10 +4,17 @@ clear; clc; close all;
 % Flat and Corrugated Diaphragm Design Handbook by Mario Giovanni
 
 force = 0:.001:5;
-hole_rad = (4.75/2)*(10^-3);
-shaft_rad = (3/2)*(10^-3);
-membrane_thickness = 0.381*(10^-3);
-elasticity = 0.5841*(10^6);
+hole_rad = (7/2)*(10^-3);
+shaft_rad = (4/2)*(10^-3);
+
+% Marian HT-6210 Extra Soft Silicone: https://www.rogerscorp.com/elastomeric-material-solutions/bisco-silicones/bisco-ht-6000-series-performance-solid-silicones
+% membrane_thickness = 0.381*(10^-3);
+% elasticity = 0.584*(10^6);
+% poisson = .5;
+
+% McMaster - 8611K222: https://www.mcmaster.com/8611K222/
+membrane_thickness = 0.305*(10^-3);%0.254*(10^-3); %0.1524*(10^-3);
+elasticity = 3*(10^6);
 poisson = .5;
 
 solidarity_ratio = hole_rad/shaft_rad;

@@ -3,8 +3,8 @@ clear; clc, close all;
 
 %% Static Forces
 addpath("COMSOL_Data")
-inductorID = "Inductor11";
-movingMass = "BigMagnet";
+inductorID = "Inductor32";
+movingMass = "Magnet3x4";
 comsol_data = readmatrix(strcat("COMSOL_Data/",inductorID,"_",movingMass,".csv"));
 
 current = comsol_data(1:3,2);
@@ -26,20 +26,34 @@ hold on;
 
 %% Static Equilibrium Analysis
 
-% magnetDiam = 3; %mm
-% magnetHeight = 4; %mm
-% k_membrane = 788; %N/m
-% k_finger = (10^5)*(10^-6)*(pi*(2/2)^2)/(5*10^-3); 
-% x_0 = 6.35+0.381-3.2;
-% x_finger = x_0 - (10-7.9375);
+magnetDiam = 3; %mm
+magnetHeight = 4; %mm
+k_finger = (10^5)*(10^-6)*(pi*(2/2)^2)/(5*10^-3); 
+x_0 = 3.0613; %6.2+0.305-3; %5.74
+x_finger = x_0 - (10-7.9375);
 
-magnetDiam = 6.35; %mm
-magnetHeight = 2; %mm
-k_membrane = (.55*10^5)*(10^-6)*(pi*(7.5/2)^2)/(5*10^-3); 
-k_finger = (10^5)*(10^-6)*(pi*(2.15/2)^2)/(5*10^-3);
-x_0 = 5;
-x_finger = x_0;
+% Membrane model
+hole_rad = (7/2)*(10^-3);
+shaft_rad = (magnetDiam/2)*(10^-3);
+membrane_thickness = 0.305*(10^-3); % .012"
+% membrane_thickness = 0.254*(10^-3); % .010"
+% membrane_thickness = 0.203*(10^-3); % .008"
+% membrane_thickness = 0.1524*(10^-3); % .006"
+young_mod = 3*(10^6);
+poisson = .5;
+solidarity_ratio = hole_rad/shaft_rad;
+k_membrane = ((hole_rad^2/(young_mod*membrane_thickness^3))*...
+    (3*(1-poisson^2)/pi)*((solidarity_ratio^2-1)/(4*solidarity_ratio^2)...
+    -(log(solidarity_ratio)^2)/(solidarity_ratio^2-1)))^(-1);
 
+% magnetDiam = 6.35; %mm
+% magnetHeight = 2; %mm
+% k_membrane = (.55*10^5)*(10^-6)*(pi*(7.5/2)^2)/(5*10^-3); 
+% k_finger = (10^5)*(10^-6)*(pi*(2.15/2)^2)/(5*10^-3);
+% x_0 = 5;
+% x_finger = x_0;
+
+k_total = k_membrane + k_finger;
 membrane_force = (x_0-location)*k_membrane;
 membrane_force = max(membrane_force,0);
 finger_force = (x_finger-location)*k_finger;
@@ -47,8 +61,8 @@ finger_force = min(finger_force,0);
 elastic_force = finger_force + membrane_force;
 
 magnet_mass = 7*(10^(-6))*((magnetDiam/2)^2)*pi*magnetHeight;
-% tactor_mass = 7*(10^(-6))*((2/2)^2)*pi*6;
-tactor_mass = 1.25*(10^(-6))*68.2;
+tactor_mass = 7*(10^(-6))*((2/2)^2)*pi*6;
+% tactor_mass = 1.25*(10^(-6))*68.2;
 moving_mass = magnet_mass + tactor_mass;
 gravity_force = 1000*9.81*moving_mass;
 
@@ -81,16 +95,22 @@ ylabel("Force (mN)")
 freq = 0:500;
 omega = freq*2*pi;
 damping_ratio = [.3, .4, .5]; 
-damping = damping_ratio*2*(moving_mass*k_membrane)^.5;
+damping = damping_ratio*2*(moving_mass*k_total)^.5;
 
-input_force = interp1(location,abs(force(1,:)-force(3,:)),x_0)/1000;
+
+x_up = linspace(location(2),location(end),1000);
+baseline_force = interp1(location(2:end),elastic_force(2:end)-force(2,2:end)'-gravity_force,x_up);
+operating_idx = and((baseline_force(2:end)<0),(baseline_force(1:end-1)>=0));
+operating_point = x_up(operating_idx);
+
+input_force = interp1(location,abs(force(1,:)-force(3,:)),operating_point)/1000;
 
 figure;
 x = zeros(length(damping),length(freq));
 iter1 = 0;
 for c = damping
     iter1 = iter1+1;
-    x(iter1,:) = abs(input_force./(-moving_mass*omega.^2 + 1i*c*omega + k_membrane));
+    x(iter1,:) = abs(input_force./(-moving_mass*omega.^2 + 1i*c*omega + k_total));
     plot(freq,(10^6)*x(iter1,:))
     hold on;
 end

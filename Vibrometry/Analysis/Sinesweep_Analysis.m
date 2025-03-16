@@ -2,7 +2,7 @@ clc; clear; close all;
 
 addpath(fullfile('..', 'Data'));
 
-actuator = "4mm";
+actuator = "10mm";
 filename = strcat("Sinesweep_",actuator,".mat");
 
 vibrometry_data = load(filename);
@@ -35,4 +35,7 @@ figure;
 semilogy(freq,scaling_factor*abs(coef));
 figure;
 plot(freq,1000*scaling_factor*abs(coef)./(2*pi*freq));
+xlabel("Frequency (Hz)")
+ylabel("Oscillation Amplitude (microns)")
+
 xlim([lower_freq, upper_freq]);
