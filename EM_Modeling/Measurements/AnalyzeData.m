@@ -3,13 +3,8 @@ clc; clear; close all;
 
 %% Load Data
 addpath("Data")
-<<<<<<< Updated upstream
-inductorID = "12";
-movingMass = "1007Magnetx4";
-=======
 inductorID = "30";
 movingMass = "1007Magnet";
->>>>>>> Stashed changes
 load(strcat("Data/Inductor",inductorID,"_",movingMass,".mat"))
 
 x = (0:ForceData.numMeasurements-1)*ForceData.spacing;

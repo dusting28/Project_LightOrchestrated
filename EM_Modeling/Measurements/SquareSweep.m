@@ -4,7 +4,7 @@ clc; clearvars -except zero_force; close all;
 
 %% Params
 f1 = 10;
-f2 = 200;
+f2 = 60;
 fs = 10000; % Hz
 len = 10; % Sec
 
@@ -24,9 +24,8 @@ polarityTrigger3 = addoutput(daq_out,dev_num,polarityPort3,'Digital');
 polarityTrigger4 = addoutput(daq_out,dev_num,polarityPort4,'Digital');
 
 %% Set Up DC Power Supply
-write(daq_out,[0,0,1,1])
-input('Configure power supply. Press any key to continue: ', 's'); 
 write(daq_out,[0,0,0,0])
+input('Configure power supply. Press any key to continue: ', 's'); 
 
 %% Generate Square Wave Sweep
 t = linspace(0, len, len*fs);
@@ -55,8 +54,9 @@ end
 
 %% Plot Signal
 figure;
+subplot(2,1,1)
 plot(t,signal(:,end))
-hold on;
+subplot(2,1,2)
 plot(t,signal(:,end-2))
 
 figure;
@@ -65,14 +65,14 @@ xlim([0,.5])
 
 %% Output Signal to NI Card
 tic
-for iter1 = length(changeIdx)
+for iter1 = 1:length(changeIdx)
     triggerTime = t(changeIdx(iter1));
     while toc < triggerTime
         % Blocking Command
     end  
     write(daq_out, signal(changeIdx(iter1),:));
 end
-while toc < 10
+while toc < len
      % Blocking Command
 end 
 write(daq_out,[0,0,0,0])
