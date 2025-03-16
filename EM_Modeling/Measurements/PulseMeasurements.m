@@ -7,12 +7,12 @@ ForceData.fs = 10000; % Hz
 ForceData.prePause = 1; % Sec
 ForceData.pulseLen = 1/60; % Sec
 ForceData.postPause = 2; % Sec
-ForceData.numMeasurements = 15;
+ForceData.numMeasurements = 25;
 ForceData.spacing = 2500;
 ForceData.spacing = ForceData.spacing * (1/10000);  % convert to mm
 ForceData.triggerVoltage = [10];
-ForceData.powerVoltage = 3.9;
-ForceData.inductorID = "12";
+ForceData.powerVoltage = 20;
+ForceData.inductorID = "32";
 ForceData.movingMass = "Magnet3x4"; % Magnet or Iron
 
 %% NI Card Setup
@@ -91,4 +91,4 @@ for iter1 = 1:ForceData.numMeasurements
     pause(3)
 end
 
-save(strcat("Pulsed_Inductor",ForceData.inductorID,"_",ForceData.movingMass,".mat"), "ForceData")
+save(strcat("PulsedBig_Inductor",ForceData.inductorID,"_",ForceData.movingMass,".mat"), "ForceData")
