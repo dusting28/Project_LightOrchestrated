@@ -10,7 +10,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "Q"
-			(at 0 11.938 0)
+			(at 0 14.478 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -18,7 +18,7 @@
 			)
 		)
 		(property "Value" "RPM-075PTT86"
-			(at 1.27 14.732 0)
+			(at 0 11.43 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -26,7 +26,7 @@
 			)
 		)
 		(property "Footprint" "TRANS_RPM-075P_ROM"
-			(at 13.716 -8.89 0)
+			(at 11.684 -7.112 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -36,7 +36,7 @@
 			)
 		)
 		(property "Datasheet" "RPM-075PTT86"
-			(at 10.16 -6.604 0)
+			(at 8.128 -9.652 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -46,7 +46,7 @@
 			)
 		)
 		(property "Description" ""
-			(at -285.75 -7.62 0)
+			(at 0 0 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -83,7 +83,7 @@
 		(symbol "RPM-075PTT86_1_1"
 			(polyline
 				(pts
-					(xy -6.35 0) (xy -3.81 0) (xy -1.27 2.54) (xy 1.27 2.54) (xy 3.81 0) (xy 6.35 0)
+					(xy -5.08 0) (xy -3.81 0) (xy -1.27 2.54) (xy 1.27 2.54) (xy 3.81 0) (xy 5.08 0)
 				)
 				(stroke
 					(width 0)
@@ -95,7 +95,7 @@
 			)
 			(polyline
 				(pts
-					(xy -3.81 1.27) (xy -2.54 0) (xy -2.54 1.27) (xy -3.81 1.27)
+					(xy -3.81 1.27) (xy -2.54 1.27) (xy -2.54 0) (xy -3.81 1.27)
 				)
 				(stroke
 					(width 0)
@@ -107,19 +107,7 @@
 			)
 			(polyline
 				(pts
-					(xy -2.54 2.54) (xy 2.54 2.54)
-				)
-				(stroke
-					(width 0.2032)
-					(type solid)
-				)
-				(fill
-					(type none)
-				)
-			)
-			(polyline
-				(pts
-					(xy -1.27 7.62) (xy 1.27 10.16)
+					(xy -1.27 6.35) (xy 1.27 8.89)
 				)
 				(stroke
 					(width 0)
@@ -131,7 +119,7 @@
 			)
 			(polyline
 				(pts
-					(xy 0 7.62) (xy -1.27 8.89) (xy -1.27 7.62) (xy 0 7.62)
+					(xy 0 6.35) (xy -1.27 6.35) (xy -1.27 7.62) (xy 0 6.35)
 				)
 				(stroke
 					(width 0)
@@ -143,7 +131,7 @@
 			)
 			(circle
 				(center 0 0)
-				(radius 6.35)
+				(radius 5.08)
 				(stroke
 					(width 0)
 					(type default)
@@ -154,7 +142,7 @@
 			)
 			(polyline
 				(pts
-					(xy 1.27 7.62) (xy 3.81 10.16)
+					(xy 1.27 6.35) (xy 3.81 8.89)
 				)
 				(stroke
 					(width 0)
@@ -166,7 +154,7 @@
 			)
 			(polyline
 				(pts
-					(xy 2.54 7.62) (xy 1.27 8.89) (xy 1.27 7.62) (xy 2.54 7.62)
+					(xy 2.54 6.35) (xy 1.27 6.35) (xy 1.27 7.62) (xy 2.54 6.35)
 				)
 				(stroke
 					(width 0)
@@ -176,8 +164,8 @@
 					(type outline)
 				)
 			)
-			(pin input line
-				(at -8.89 0 0)
+			(pin unspecified line
+				(at -7.62 0 0)
 				(length 2.54)
 				(name "C"
 					(effects
@@ -194,8 +182,8 @@
 					)
 				)
 			)
-			(pin output line
-				(at 8.89 0 180)
+			(pin unspecified line
+				(at 7.62 0 180)
 				(length 2.54)
 				(name "E"
 					(effects

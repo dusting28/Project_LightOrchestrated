@@ -1,7 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "CRCW040250K0FKED")(type "KiCad")(uri "${KIPRJMOD}/LightTouchLibrary/CRCW040250K0FKED.kicad_sym")(options "")(descr ""))
-  (lib (name "RPM-075PTT86")(type "KiCad")(uri "${KIPRJMOD}/LightTouchLibrary/RPM-075PTT86.kicad_sym")(options "")(descr ""))
-  (lib (name "RQ5E070BNTCL")(type "KiCad")(uri "${KIPRJMOD}/LightTouchLibrary/RQ5E070BNTCL.kicad_sym")(options "")(descr ""))
-  (lib (name "SDR0604-821KL")(type "KiCad")(uri "${KIPRJMOD}/LightTouchLibrary/SDR0604-821KL.kicad_sym")(options "")(descr ""))
-)
