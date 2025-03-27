@@ -119938,6 +119938,30 @@
 		(layer "Edge.Cuts")
 		(uuid "ef2df21d-efca-4b48-b35b-ecf912b9bbf6")
 	)
+	(gr_text "RE TOUCH"
+		(at 192 151 0)
+		(layer "F.SilkS")
+		(uuid "1fa5dc1c-ab6d-4171-b2a6-24c08be3a055")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom)
+		)
+	)
+	(gr_text "RE TOUCH"
+		(at 110 151 0)
+		(layer "B.SilkS")
+		(uuid "4408a4ef-eda2-46de-83c5-e58e99d7116c")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+			(justify left bottom mirror)
+		)
+	)
 	(via
 		(at 161.46 146)
 		(size 1.5)
