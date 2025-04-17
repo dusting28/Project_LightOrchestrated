@@ -7,17 +7,12 @@ warning('off', 'all');
 
 MeasurementSignal.nReps = 1;
 MeasurementSignal.fs = 5000;
-MeasurementSignal.len = 10;
-MeasurementSignal.videoFile = "Default2";
-MeasurementSignal.offset = 3.25; % mm
+MeasurementSignal.len = 100;
+MeasurementSignal.videoFile = "Unshielded_DecreasingPulses";
+MeasurementSignal.laserLower = -10;
+MeasurementSignal.laserUpper = 10;
 
-if MeasurementSignal.offset > 0
-    topbottom = "Top";
-else
-    topbottom = "Bottom";
-end
-
-filename = strcat("Displacement_",MeasurementSignal.videoFile,"_",topbottom);
+filename = strcat("Displacement_",MeasurementSignal.videoFile);
 
 %% Setup the NI measurement device
 dev_num = 'Dev1';
