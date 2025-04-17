@@ -1,0 +1,56 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 13.97 16.51)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "01e0514c-4452-4cd0-9070-af0c052bffe2")
+		(property "Sheetname" "SinglePixel1"
+			(at 13.97 15.7984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 13.97 24.7146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "0")
+		)
+	)
+	(embedded_fonts no)
+)

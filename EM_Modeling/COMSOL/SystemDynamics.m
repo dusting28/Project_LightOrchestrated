@@ -26,18 +26,20 @@ x_0 = 3.33; %6.2+0.305-3; %5.74
 x_finger = x_0+.9375;
 
 % Membrane model
-hole_rad = (7/2)*(10^-3);
+hole_rad = (9/2)*(10^-3);
 shaft_rad = (magnetDiam/2)*(10^-3);
 % membrane_thickness = 0.305*(10^-3); % .012"
 membrane_thickness = 0.254*(10^-3); % .010"
 % membrane_thickness = 0.203*(10^-3); % .008"
-%membrane_thickness = 0.1524*(10^-3); % .006"
-young_mod = .5*(10^6);
+% membrane_thickness = 0.1524*(10^-3); % .006"
+young_mod = 2*(10^6);
 poisson = .5;
 solidarity_ratio = hole_rad/shaft_rad;
 k_membrane = ((hole_rad^2/(young_mod*membrane_thickness^3))*...
     (3*(1-poisson^2)/pi)*((solidarity_ratio^2-1)/(4*solidarity_ratio^2)...
     -(log(solidarity_ratio)^2)/(solidarity_ratio^2-1)))^(-1);
+
+k_membrane = 0;
 
 % magnetDiam = 6.35; %mm
 % magnetHeight = 2; %mm

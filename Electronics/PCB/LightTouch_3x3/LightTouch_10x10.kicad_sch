@@ -1,0 +1,392 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 77.47 16.51)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "01a9dda1-c6c7-489a-bbcb-17c25dbff946")
+		(property "Sheetname" "SinglePixel3"
+			(at 77.47 15.7984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 77.47 24.7146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 13.97 16.51)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "01e0514c-4452-4cd0-9070-af0c052bffe2")
+		(property "Sheetname" "SinglePixel1"
+			(at 13.97 15.7984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 13.97 24.7146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "1")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 13.97 33.02)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "0fd09134-ad28-4577-a934-8a2597f9c248")
+		(property "Sheetname" "SinglePixel4"
+			(at 13.97 32.3084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 13.97 41.2246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 45.72 49.53)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "19df1b47-696a-4769-8cca-04c46ecbfb69")
+		(property "Sheetname" "SinglePixel8"
+			(at 45.72 48.8184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 45.72 57.7346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 45.72 33.02)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "3c231555-567c-4f52-9021-63f08d5fb3cb")
+		(property "Sheetname" "SinglePixel5"
+			(at 45.72 32.3084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 45.72 41.2246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 13.97 49.53)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "572e8c2c-3887-4279-913f-4257fe05c4a9")
+		(property "Sheetname" "SinglePixel7"
+			(at 13.97 48.8184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 13.97 57.7346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 78.74 49.53)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "7a233ddf-e676-43c6-9a6b-ae4bc109caea")
+		(property "Sheetname" "SinglePixel9"
+			(at 78.74 48.8184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 78.74 57.7346 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 45.72 16.51)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "a206e607-5949-4dbc-9e3f-bcc46086e91d")
+		(property "Sheetname" "SinglePixel2"
+			(at 45.72 15.7984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 45.72 24.7146 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 77.47 33.02)
+		(size 29.21 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "d0daf464-ba41-42ba-b3dd-503f975e0634")
+		(property "Sheetname" "SinglePixel6"
+			(at 77.47 32.3084 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "LightTouch_1x1.kicad_sch"
+			(at 77.47 41.2246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "LightTouch_10x10"
+				(path "/46dc7ff9-5ee8-4aa6-ae4f-f0407ca92e28"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "0")
+		)
+	)
+	(embedded_fonts no)
+)
