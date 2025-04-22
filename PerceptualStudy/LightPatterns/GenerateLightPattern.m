@@ -1,7 +1,8 @@
 % Set parameters
 fps = 60;           % Frames per second
-duration = 2;       % Duration in seconds (1-second loop)
+duration = 4;       % Duration in seconds (1-second loop)
 numFrames = fps * duration;
+whiteFrames = 2;
 frameSize = [1080, 1920]; % Resolution (height, width)
 numReps = 40;
 deltaPixel = 3;
@@ -15,7 +16,7 @@ open(v);
 % Generate frames
 for iter1 = 1:numReps
     for frame = 1:numFrames
-        if frame == numFrames-1 % Only the last frame is white
+        if and((frame <= numFrames-1),(frame >= numFrames-whiteFrames))  % Only the last frame is white
             img = ones(frameSize) * (255-(iter1-1)*deltaPixel); % White frame
         else
             img = zeros(frameSize); % Black frame

@@ -1,18 +1,31 @@
 clc; clear; close all;
 
-filename = "Inductor_20VPulse_NewMOSFET.csv";
+div_width = .01; %s
+
+filename = "Inductor_LEDDriven_100nFGate.csv";
 voltage = readmatrix(filename);
-t = (1:length(voltage))/length(voltage);
+t = (1:length(voltage))*10*div_width/length(voltage);
 
 figure;
-plot(t,20-voltage(:,11));
+plot(t,voltage(:,11));
 hold on;
 
-
-filename = "Inductor_20VPulse.csv";
+filename = "Inductor_LEDDriven_470ohmGate.csv";
 voltage = readmatrix(filename);
-t = (1:length(voltage))/length(voltage);
+t = (1:length(voltage))*10*div_width/length(voltage);
 
-figure;
-plot(t,20-voltage(:,11));
+plot(t,voltage(:,11));
+
+filename = "Inductor_DAQDriven_100nFGate.csv";
+voltage = readmatrix(filename);
+t = (1:length(voltage))*10*div_width/length(voltage);
+
+plot(t,voltage(:,11));
+
+
+filename = "Inductor_DAQDriven_470ohmGate.csv";
+voltage = readmatrix(filename);
+t = (1:length(voltage))*10*div_width/length(voltage);
+
+plot(t,voltage(:,11));
 hold off;
