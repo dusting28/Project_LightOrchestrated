@@ -4,8 +4,8 @@ addpath("COMSOL_Data")
 
 %% Static Forces
 inductorID = "32";
-movingMass = "Magnet3x4";
-comsol_data = readmatrix(strcat("COMSOL_Data/Inductor",inductorID,"_",movingMass,"_Shielded.csv"));
+movingMass = "Magnet3x4_Design9";
+comsol_data = readmatrix(strcat("COMSOL_Data/Inductor",inductorID,"_",movingMass,".csv"));
 
 x = comsol_data(1:3:end,1);
 force = zeros(3,length(x));
@@ -22,8 +22,11 @@ total_force = force(1,:);
 magnetDiam = 3; %mm
 magnetHeight = 4; %mm
 k_finger = (10^5)*(10^-6)*(pi*(2/2)^2)/(5*10^-3); 
-x_0 = 3.33; %6.2+0.305-3; %5.74
-x_finger = x_0+.9375;
+% k_finger = 0;
+x_0 = 2.5; %6.2+0.305-3; %5.74
+heatSink_height = 3.175;
+tactor_height = 3.175;
+x_finger = 12.7+1+heatSink_height-4.8-4-tactor_height;
 
 % Membrane model
 hole_rad = (9/2)*(10^-3);
@@ -39,7 +42,7 @@ k_membrane = ((hole_rad^2/(young_mod*membrane_thickness^3))*...
     (3*(1-poisson^2)/pi)*((solidarity_ratio^2-1)/(4*solidarity_ratio^2)...
     -(log(solidarity_ratio)^2)/(solidarity_ratio^2-1)))^(-1);
 
-k_membrane = 0;
+k_membrane = (.55*10^5)*(10^-6)*(pi*(3/2)^2)/(x_0*10^-3); 
 
 % magnetDiam = 6.35; %mm
 % magnetHeight = 2; %mm
@@ -92,7 +95,7 @@ figure;
 plot(x, on_force)
 hold on;
 yline(0)
-xlim([1.25,4.25]);
+xlim([1.25,12.7+heatSink_height-4.8-4]);
 title("Up Stroke")
 xlabel("Distance Between Magnet and Inductor (mm)")
 ylabel("Force (mN)")
@@ -102,7 +105,7 @@ figure;
 plot(x, off_force)
 hold on;
 yline(0)
-xlim([1.25,4.25]);
+xlim([1.25,12.7+heatSink_height-4.8-4]);
 title("Down Stroke")
 xlabel("Distance Between Magnet and Inductor (mm)")
 ylabel("Force (mN)")

@@ -5,7 +5,7 @@ addpath("COMSOL_Data")
 
 %% Static Forces
 inductorID = "32";
-movingMass = "Magnet3x4_Shielded";
+movingMass = "Magnet3x4";
 comsol_data = readmatrix(strcat("COMSOL_Data/Inductor",inductorID,"_",movingMass,".csv"));
 
 x = comsol_data(1:3:end,1);
@@ -19,7 +19,7 @@ core_force_1 = -force(2,:);
 total_force_1 = force(1,:);
 
 inductorID = "32";
-movingMass = "Magnet3x4_Design8";
+movingMass = "Magnet3x4_Design9";
 comsol_data = readmatrix(strcat("COMSOL_Data/Inductor",inductorID,"_",movingMass,".csv"));
 
 x = comsol_data(1:3:end,1);
