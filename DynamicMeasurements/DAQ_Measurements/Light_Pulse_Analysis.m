@@ -1,9 +1,9 @@
 %% Dustin Goetz
 clc; clear; close all;
-addpath("Data")
+addpath("DAQ_Data")
 
 %% Proportional Control
-proportionalData = load("Data\LED_DecreasingPulses.mat");
+proportionalData = load("DAQ_Data\LED_DecreasingPulses3.mat");
 voltageData = proportionalData.MeasurementSignal.signals{1};
 fs = proportionalData.MeasurementSignal.fs;
 t = (1:size(voltageData,1))/fs;
@@ -36,8 +36,8 @@ for iter1 = chop_idx
     end_chop = iter1+window_len;
     controlSig = voltageData(begin_chop:end_chop,3);
     powerSig = voltageData(begin_chop:end_chop,1)/.22;
-    displacementSig = -(10^-2)*voltageData(begin_chop:end_chop,2);
-    velSig = (fs)*diff(smooth(displacementSig,20));
+    displacementSig = -(2.13)*(voltageData(begin_chop:end_chop,2)-voltageData(begin_chop,2));
+    velSig = (fs)*diff(smooth(displacementSig,5));
     t_chop = t(begin_chop:end_chop)-t(begin_chop);
     
     control_mag(iter0) = max(controlSig)-controlSig(1);
@@ -52,7 +52,7 @@ for iter1 = chop_idx
         plot(smooth(displacementSig,20))
         hold off;
         subplot(1,2,2)
-        plot(diff(smooth(displacementSig,20)))
+        plot(fs*diff(smooth(displacementSig,20)))
     end
 end
 

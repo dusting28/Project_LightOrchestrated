@@ -6,17 +6,19 @@ addpath("ElasticMember/Elastic_COMSOL_Data")
 addpath("ElasticMember/Elastic_Measurement_Data")
 
 %% Options
-EM_Data = "COMSOL";
-% EM_Data = "Measured";
+% EM_Data = "COMSOL";
+EM_Data = "Measured";
 
+% Elastic_Data = "Rigid";
 % Elastic_Data = "COMSOL";
 Elastic_Data = "Measured";
 
 %% Stroke
 x_spacing = 0.05;
-x = 0.5:x_spacing:6;
+x = 0.75:x_spacing:6;
 heatSink_height = 3.175;
 tactorHeight = 3.175;
+elasticHeight = 1.5;
 x_finger = 12.7+1+heatSink_height-4.8-4-tactorHeight;
 
 %% EM Forces
@@ -28,18 +30,36 @@ if EM_Data == "COMSOL"
     coil_force = 1000*EM_COMSOL_Data(1:3:end,3)' - 1000*EM_COMSOL_Data(2:3:end,3)';
     coil_force = interp1(EM_x,coil_force,x);
 elseif EM_Data == "Measured"
+    EM_Measured_Data = load("Electromagnetic/Measurements/EM_Measurement_Data/LightTouch_PulsedEMData.mat");
+    EM_x = (0:EM_Measured_Data.ForceData.numMeasurements-1)*EM_Measured_Data.ForceData.spacing;
+    coil_force = zeros(length(EM_x),1);
+    core_force = zeros(length(EM_x),1);
+    for iter2 = 1:size(EM_Measured_Data.ForceData.measurements,1)
+        initialForce = median(EM_Measured_Data.ForceData.measurements{iter2,1}(1:5000));
+        maxForce = max(EM_Measured_Data.ForceData.measurements{iter2,1}(10005:10165));
+        minForce = min(EM_Measured_Data.ForceData.measurements{iter2,1}(10005:10165));
+        core_force(iter2) = initialForce;
+        coil_force(iter2) = (maxForce+minForce)/2-initialForce;
+    end
+    core_force = interp1(EM_x,core_force,x);
+    coil_force = interp1(EM_x,coil_force,x);
 end
 
 %% Spring Force
-if Elastic_Data == "COMSOL"
+elastic_idx = (elasticHeight-x(1))/x_spacing + 1;
+if Elastic_Data == "Rigid"
     elastic_force = zeros(1,length(x));
+    elastic_force(1:elastic_idx-1) = -core_force(1:elastic_idx-1);
+elseif Elastic_Data == "COMSOL"
+    Elastic_COMSOL_Data = readmatrix("ElasticMember/Elastic_COMSOL_Data/CompressionTest_Ecoflex10_1.5mm.csv");
+    elastic_force = [-1000*flipud(Elastic_COMSOL_Data(1:elastic_idx,2));zeros(length(x)-elastic_idx,1)]';
 elseif Elastic_Data == "Measured"
-    Elastic_Measurement_Data = load("ElasticMember/Elastic_Measurement_Data/Elastomer_CompressionTest.mat");
+    Elastic_Measurement_Data = load("ElasticMember/Elastic_Measurement_Data/Elastomer_1.5mm_CompressionTest.mat");
     elastic_force = zeros(Elastic_Measurement_Data.ForceData.numMeasurements,1);
-    for iter1 = 1:size(elastic_force,1)
+    for iter1 = 1:length(elastic_force)
         elastic_force(iter1) = mean(Elastic_Measurement_Data.ForceData.measurements{iter1});
     end
-    elastic_force = [flipud(elastic_force(1:41));zeros(length(x)-41,1)]';
+    elastic_force = [flipud(elastic_force(1:elastic_idx));zeros(length(x)-elastic_idx,1)]';
 end
 
 %% Finger Force
@@ -57,7 +77,7 @@ tactorDiam = 1.5875; % mm
 tactorDensity = 1.41; % g/cm^3
 tactorMass = tactorDensity*(10^(-6))*((tactorDiam/2)^2)*pi*tactorHeight; % g
 moving_mass = magnetMass + tactorMass;
-gravity_force = -1000*9.81*moving_mass;
+gravity_force = -9.81*moving_mass; % mN
 
 off_force = elastic_force+finger_force+core_force+gravity_force;
 on_force = elastic_force+finger_force+coil_force+core_force+gravity_force;
@@ -70,6 +90,43 @@ if length(idx_2)>1
     idx_1 = idx_2(1);
     idx_2 = idx_2(2);
 end
+
+% idx_1 = 16;
+% idx_2 = 38;
+
+%% Dynamic Modeling
+dt = 1/1000000;
+t_off = 1/120;
+t = 0:dt:.0002;
+magnet_x = zeros(length(t),1);
+magnet_v = magnet_x;
+magnet_x(1) = x(idx_1-1)/1000;
+
+for iter1 = 2:length(t)
+
+    x_prev = magnet_x(iter1-1);
+
+    % Define the force as a function of time
+    if x_prev <= x(idx_2)/1000
+        if t(iter1) < t_off
+            F = interp1(x/1000,on_force/1000,x_prev);
+        else
+            F = interp1(x/1000,off_force/1000,x_prev);
+        end
+        a = F / (moving_mass/1000);
+        magnet_v(iter1) = magnet_v(iter1-1) + a * dt;
+        magnet_x(iter1) = x_prev + magnet_v(iter1-1) * dt;
+    else
+        magnet_v(iter1) = 0;
+        magnet_x(iter1) = x(idx_2)/1000;
+        break;
+    end
+end
+
+disp(strcat("Response Time: ", num2str(1000*t(iter1)), " ms"))
+
+figure;
+plot(t,1000*magnet_x);
 
 %% Plot Data
 figure;
@@ -94,10 +151,10 @@ xline(x(idx_1))
 xline(x(idx_2))
 hold off;
 xlim([x(1),x(end)]);
-legend(["Up Stroke","Down Stroke"])
+legend(["Down Stroke","Up Stroke"])
 xlabel("Distance Between Magnet and Inductor (mm)")
 ylabel("Force (mN)")
 
 
-sum(on_force(idx_1:idx_2)*x_spacing/1000)
-sum(off_force(idx_1:idx_2)*x_spacing/1000)
+disp(strcat("Upstroke Energy: ",num2str(sum(on_force(idx_1:idx_2)*x_spacing/1000))," mJ"));
+disp(strcat("Downstroke Energy: ",num2str(sum(off_force(idx_1:idx_2)*x_spacing/1000))," mJ"));
