@@ -5,13 +5,13 @@
 clc; clear; close all;
 warning('off', 'all');
 
-MeasurementSignal.nReps = 1;
+MeasurementSignal.nReps = 50;
+MeasuementSignal.pulseLen = .5;
+MeasurementSignal.pulseRamp = .025;
 MeasurementSignal.fs = 5000;
 MeasurementSignal.len = 30;
 % MeasurementSignal.videoFile = "LED_Pulse";
-filename = "ThermalPulse_10ms";
-MeasurementSignal.laserLower = -10;
-MeasurementSignal.laserUpper = 10;
+filename = "ThermalPulse_500ms";
 
 % filename = strcat("Displacement_",MeasurementSignal.videoFile);
 
@@ -22,15 +22,12 @@ daq_in.Rate = MeasurementSignal.fs;
 
 pulseInput = addinput(daq_in,dev_num,"ai0",'Voltage');
 pulseInput.TerminalConfig = 'Differential';
-laserInput = addinput(daq_in,dev_num,"ai1",'Voltage');
-laserInput.TerminalConfig = 'Differential';
-controlInput = addinput(daq_in,dev_num,"ai3",'Voltage');
-controlInput.TerminalConfig = 'Differential';
 
 MeasurementSignal.signals = cell(MeasurementSignal.nReps,1);
 
 for iter = 1:MeasurementSignal.nReps
-    
+    disp(strcat("Trial ", num2str(iter), ": ", num2str(1000*(MeasuementSignal.pulseLen+(iter-1)*MeasurementSignal.pulseRamp)),"ms Pulse"));
+
     % Measure Response
     start(daq_in,'Duration',round(MeasurementSignal.len*MeasurementSignal.fs));
     pause(MeasurementSignal.len)
@@ -40,15 +37,12 @@ for iter = 1:MeasurementSignal.nReps
     MeasurementSignal.signals{iter} = recordedData;
    
     figure(1);
-    subplot(1,3,1);
-    plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,1)/.22);
-    subplot(1,3,2);
-    plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,2));
-    subplot(1,3,3);
-    plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,3));
+    plot((1:length(recordedData))/MeasurementSignal.fs,recordedData(:,1)/.22);
+
+    save(strcat(filename,".mat"), 'MeasurementSignal');
 
     fprintf('Completed Trial %i\n',iter);
-end
 
-%% Save
-save(strcat(filename,".mat"),'MeasurementSignal','-v7.3');
+    pause(90)
+
+end
