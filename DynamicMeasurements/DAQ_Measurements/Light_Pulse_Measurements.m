@@ -7,9 +7,9 @@ warning('off', 'all');
 
 MeasurementSignal.nReps = 1;
 MeasurementSignal.fs = 5000;
-MeasurementSignal.len = 30;
+MeasurementSignal.len = 150;
 % MeasurementSignal.videoFile = "LED_Pulse";
-filename = "ThermalPulse_10ms";
+filename = "Asus_DecreasingPulses_SinglePixel";
 MeasurementSignal.laserLower = -10;
 MeasurementSignal.laserUpper = 10;
 

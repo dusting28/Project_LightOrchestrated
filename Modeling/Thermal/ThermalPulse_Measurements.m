@@ -11,7 +11,7 @@ MeasurementSignal.pulseRamp = .025;
 MeasurementSignal.fs = 5000;
 MeasurementSignal.len = 30;
 % MeasurementSignal.videoFile = "LED_Pulse";
-filename = "ThermalPulse_500ms";
+filename = "ThermalPulse_HeatSink_500ms";
 
 % filename = strcat("Displacement_",MeasurementSignal.videoFile);
 

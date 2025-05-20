@@ -2,7 +2,7 @@
 fps = 60;           % Frames per second
 duration = 4;       % Duration in seconds (1-second loop)
 numFrames = fps * duration;
-whiteFrames = 2;
+whiteFrames = 1;
 frameSize = [1080, 1920]; % Resolution (height, width)
 numReps = 40;
 deltaPixel = 3;
@@ -28,3 +28,5 @@ end
 % Close video file
 close(v);
 disp(['Video saved as ', videoName]);
+
+system('"C:\Program Files\VideoLAN\VLC\vlc.exe" flashing_video.avi --fullscreen --qt-fullscreen-screennumber=2 --play-and-exit');

@@ -3,7 +3,7 @@ clc; clear; close all;
 addpath("DAQ_Data")
 
 %% Proportional Control
-proportionalData = load("DAQ_Data\LED_DecreasingPulses3.mat");
+proportionalData = load("LED_DecreasingPulses3.mat");
 voltageData = proportionalData.MeasurementSignal.signals{1};
 fs = proportionalData.MeasurementSignal.fs;
 t = (1:size(voltageData,1))/fs;
