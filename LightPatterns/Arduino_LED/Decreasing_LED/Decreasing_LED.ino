@@ -1,7 +1,7 @@
 const int ledPin = 12;  // PWM-capable on Mega
 const int numPulses = 100;
-const int pulseWidthMicros = 8333;  // 1/120 sec = ~8.33 ms
-const int pulseSpacingMs = 500;
+const int pulseWidthMicros = 17;  // 1/120 sec = ~8.33 ms
+const int pulseSpacingMs = 1000;
 
 void setup() {
   pinMode(ledPin, OUTPUT);
@@ -14,7 +14,7 @@ void loop() {
     int brightness = 100-i;
     analogWrite(ledPin, brightness);
 
-    delayMicroseconds(pulseWidthMicros);
+    delay(pulseWidthMicros);
 
     analogWrite(ledPin, 0);
     delay(pulseSpacingMs);

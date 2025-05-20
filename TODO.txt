@@ -1,26 +1,21 @@
 TODO:
 
-1. Order other inductors
-	Get samples from Codaca
-2. Determine forces produced in version 3
-	COMSOL
-	Measurements
-	Compare 2 vs 1 magnet stack
-3. Solve bottoming out issues
-	Touch surface to prevent finger from pressing magnet too far down
-	Analyze stable equilibrium points
-4. Construct upgraded version
-	Different spring (better manufacturing)
-	3D-printed tactor
-	Touch surface
-	Thinner plates?
-4. Meet with Yon to show prototype
-5. Magnetic shielding
-6. Electrical system
-	New Inductors
-	3x3 Array
-
-
-Contingency Plans:
-	Look at Magnets with 3mm diameter
-	Look at Inductors 29 and 30
+1. Finish Design
+	Figure out time constant on response time (data vs model)
+	Explore membrane elastomer (depends on shielding)
+	Shielding analysis with Max
+	Thermal analysis with Cole
+2. Fabricate Single Pixel
+	Magnetic shielding fabrication (Paul)
+	PTFE guide
+	Aluminum heat sink
+	Thermal Measurements
+3. 3x3 Array
+	Solder SMT components
+	Get high-speed video monitor
+	Screws
+	Optical cavity
+	Magnetic shielding fabrication
+	PTFE guide
+	Aluminum heat sink
+	Electrical analysis with Jeptha (change out gate resistor?)

@@ -5,7 +5,7 @@ clc; clearvars -except zero_force; close all;
 %% Params
 ForceData.fs = 10000; % Hz
 ForceData.measLen = 1; % Sec
-ForceData.numMeasurements = 45;
+ForceData.numMeasurements = 20;
 ForceData.spacing = 500; % Linear Stage Value
 ForceData.spacing = ForceData.spacing * (1/10000);  % convert to mm
 
@@ -78,4 +78,4 @@ for iter1 = 1:ForceData.numMeasurements
     pause(3)
 end
 
-save("Elastomer_CompressionTest4.mat", "ForceData")
+save("Elastomer_1.5mm_CompressionTest.mat", "ForceData")
