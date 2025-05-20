@@ -3,7 +3,7 @@ clc; clear; close all;
 addpath("DAQ_Data")
 
 %% Proportional Control
-proportionalData = load("DAQ_Data\LED_DecreasingPulses3.mat");
+proportionalData = load("DAQ_Data\OLED_DecreasingPulses_SinglePixel.mat");
 voltageData = proportionalData.MeasurementSignal.signals{1};
 fs = proportionalData.MeasurementSignal.fs;
 t = (1:size(voltageData,1))/fs;
@@ -60,7 +60,7 @@ figure;
 plot(control_mag,'.');
 hold on;
 plot(power_mag,'.');
-plot(vel_mag,'.');
+% plot(vel_mag,'.');
 
 %% Gate Resistor Analysis
 
