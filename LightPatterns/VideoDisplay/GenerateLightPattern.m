@@ -1,14 +1,14 @@
 % Set parameters
-fps = 60;           % Frames per second
+fps = 144;           % Frames per second
 duration = 4;       % Duration in seconds (1-second loop)
 numFrames = fps * duration;
-whiteFrames = 1;
+whiteFrames = 3;
 frameSize = [1080, 1920]; % Resolution (height, width)
 numReps = 40;
 deltaPixel = 3;
 
 % Create video writer object
-videoName = 'flashing_video.avi';
+videoName = 'DecreasingPulses_144Hz.avi';
 v = VideoWriter('flashing_video.avi', 'Motion JPEG AVI');  
 v.FrameRate = fps;
 open(v);
