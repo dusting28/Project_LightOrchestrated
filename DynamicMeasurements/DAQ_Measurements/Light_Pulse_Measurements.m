@@ -9,7 +9,7 @@ MeasurementSignal.nReps = 1;
 MeasurementSignal.fs = 5000;
 MeasurementSignal.len = 150;
 % MeasurementSignal.videoFile = "LED_Pulse";
-filename = "Asus_DecreasingPulses_SinglePixel";
+filename = "Laptop_DecreasingPulses_SinglePixel";
 MeasurementSignal.laserLower = -10;
 MeasurementSignal.laserUpper = 10;
 
