@@ -6,7 +6,7 @@ clc; clear; close all;
 warning('off', 'all');
 
 MeasurementSignal.nReps = 50;
-MeasuementSignal.pulseLen = .5;
+MeasurementSignal.pulseLen = .5;
 MeasurementSignal.pulseRamp = .025;
 MeasurementSignal.fs = 5000;
 MeasurementSignal.len = 30;
@@ -26,7 +26,7 @@ pulseInput.TerminalConfig = 'Differential';
 MeasurementSignal.signals = cell(MeasurementSignal.nReps,1);
 
 for iter = 1:MeasurementSignal.nReps
-    disp(strcat("Trial ", num2str(iter), ": ", num2str(1000*(MeasuementSignal.pulseLen+(iter-1)*MeasurementSignal.pulseRamp)),"ms Pulse"));
+    disp(strcat("Trial ", num2str(iter), ": ", num2str(1000*(MeasurementSignal.pulseLen+(iter-1)*MeasurementSignal.pulseRamp)),"ms Pulse"));
 
     % Measure Response
     start(daq_in,'Duration',round(MeasurementSignal.len*MeasurementSignal.fs));
