@@ -8,7 +8,7 @@ num_trials = 3;
 pulse_len = .03;
 spacing = .9992;
 start_vec = [3.015*10^4, 2.65*10^4, 2.55*10^4];
-contact_height = 3.4;
+contact_height = 2.4250;
 
 gateVoltage = zeros(num_pulses,num_trials);
 inductorCurrent = zeros(num_pulses,num_trials);
@@ -54,7 +54,7 @@ for iter0 = 1:num_trials
     
     t_chop = t(1:chop_width);
     
-    plot_idx = 24;
+    plot_idx = 1;
     
     figure;
     subplot(3,1,1);
@@ -65,7 +65,7 @@ for iter0 = 1:num_trials
     plot(t_chop,squeeze(chopped_data(2,plot_idx ,:)));
     yline(contact_height)
     
-    delta_sample = 10;
+    delta_sample = 5;
     tactor_mass = ((1.5875*2.5^2*pi)*1.18 + (12.7*0.79375^2*pi)*1.41 + (4*1.5^2*pi)*7.01)*10^-3; %g
     
     for iter1 = 1:num_pulses

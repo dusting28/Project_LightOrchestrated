@@ -16,7 +16,7 @@ x_finger = heatSink_height+1-4.8-4-tactorHeight;
 x_stop = heatSink_height-4.8-4;
 
 [~,finger_idx] = min(abs(x-x_finger));
-[~,elastic_idx] = min(abs(x-elasticHeight));
+[~,decouple_idx] = min(abs(x-elasticHeight));
 
 %% EM Forces
 EM_COMSOL_Data = readmatrix("Electromagnetic/COMSOL/EM_COMSOL_Data/LightTouch_Unshielded_CurrentSweep.csv");
@@ -40,11 +40,11 @@ elastic_force = [-1000*flipud(Elastic_COMSOL_Data(1:elastic_idx,2));zeros(length
 magnetDiam = 3; %mm
 magnetHeight = 4; %mm
 magnetDensity = 7; %g/cm^3
-magnetMass = magnetDensity*(10^(-6))*((magnetDiam/2)^2)*pi*magnetHeight; % g
+magnetMass = magnetDensity*(10^(-3))*((magnetDiam/2)^2)*pi*magnetHeight; % g
 
 tactorDiam = 1.5875; % mm
 tactorDensity = 1.41; % g/cm^3
-tactorMass = tactorDensity*(10^(-6))*((tactorDiam/2)^2)*pi*tactorHeight; % g
+tactorMass = tactorDensity*(10^(-3))*((tactorDiam/2)^2)*pi*tactorHeight; % g
 moving_mass = magnetMass + tactorMass;
 gravity_force = -9.81*moving_mass; % mN
 
@@ -58,7 +58,7 @@ start_force = zeros(numCurrent,1);
 end_force = zeros(numCurrent,1);
 for iter1 = 1:numCurrent
     total_force = elastic_force+EM_force(iter1,:);
-    start_force(iter1) = total_force(elastic_idx);
+    start_force(iter1) = total_force(decouple_idx);
     end_force(iter1) = total_force(finger_idx);
 end
 
@@ -72,18 +72,18 @@ response_time = zeros(numCurrent,1);
 energy = zeros(numCurrent,1);
 for iter1 = 1:numCurrent
     total_force = elastic_force+EM_force(iter1,:);
-    dt = 1/1000000;
+    dt = 1/10000000;
     t = 0;
-    magnet_x = x(start_idx);
+    magnet_x = x(start_idx)/1000;
     magnet_v = 0;
     nanFlag = false;
     
-    while magnet_x < x_finger
+    while magnet_x < x_finger/1000
         t = t+dt;
         F = interp1(x/1000,total_force/1000,magnet_x);
         if F < 0
-            response_time(iter1) = Nan;
-            energy(iter1) = Nan;
+            response_time(iter1) = NaN;
+            energy(iter1) = NaN;
             nanFlag = true;
             break;
         end
@@ -98,10 +98,16 @@ for iter1 = 1:numCurrent
 end
 
 figure;
-plot(current(1:38), energy(1:38));
-
-figure;
 subplot(2,1,1)
 plot(current, energy);
+xlim([current(end),current(1)])
+ylim([0,.2])
+xlabel("Current (A)")
+ylabel("Tactor Energy (mJ)")
 subplot(2,1,2)
 plot(current, response_time);
+xlim([current(end),current(1)])
+ylim([0,5])
+xlabel("Current (A)")
+ylabel("Response Time (ms)")
+sgtitle("Proportial Control")
