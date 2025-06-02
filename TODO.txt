@@ -1,8 +1,7 @@
 TODO:
 
 1. Design
-	Determine what to do about mechanical stop (elastic element)
-	Determine what to do about tactor / touch surface
+	Solve jamming issue. Decrease linear guide diameter?
 	Driving signal electronics
 
 2. Characterization
