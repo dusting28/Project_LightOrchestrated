@@ -6,28 +6,32 @@ addpath("ElasticMember/Elastic_COMSOL_Data")
 addpath("ElasticMember/Elastic_Measurement_Data")
 
 %% Options
-% EM_Data = "COMSOL";
-EM_Data = "Measured";
+EM_Data = "COMSOL";
+% EM_Data = "Measured";
 
 % Elastic_Data = "Rigid";
-% Elastic_Data = "COMSOL";
-Elastic_Data = "Measured";
+Elastic_Data = "COMSOL";
+% Elastic_Data = "Measured";
 
 %% Stroke
 x_spacing = 0.05;
-x = 0.75:x_spacing:6;
-heatSink_height = 3.175;
+x = 1:x_spacing:6;
+heatSink_height = 14.7;
 tactorHeight = 3.175;
 elasticHeight = 1.5;
-x_finger = 12.7+1+heatSink_height-4.8-4-tactorHeight;
+x_finger = heatSink_height+1-4.8-4-tactorHeight;
+x_stop = heatSink_height-4.8-4;
 
 %% EM Forces
 if EM_Data == "COMSOL"
-    EM_COMSOL_Data = readmatrix("Electromagnetic/COMSOL/EM_COMSOL_Data/LightTouch_Shielded.csv");
-    EM_x = EM_COMSOL_Data(1:3:end,1);
-    core_force = 1000*EM_COMSOL_Data(2:3:end,3)';
+    EM_COMSOL_Data = readmatrix("Electromagnetic/COMSOL/EM_COMSOL_Data/LightTouch_Unshielded_CurrentSweep.csv");
+    numCurrent = 78;
+    off_idx = numCurrent;
+    on_idx = 1;
+    EM_x = EM_COMSOL_Data(1:numCurrent:end,1);
+    core_force = 1000*EM_COMSOL_Data(off_idx:numCurrent:end,3)';
     core_force = interp1(EM_x,core_force,x);
-    coil_force = 1000*EM_COMSOL_Data(1:3:end,3)' - 1000*EM_COMSOL_Data(2:3:end,3)';
+    coil_force = 1000*EM_COMSOL_Data(on_idx:numCurrent:end,3)' - 1000*EM_COMSOL_Data(off_idx:numCurrent:end,3)';
     coil_force = interp1(EM_x,coil_force,x);
 elseif EM_Data == "Measured"
     EM_Measured_Data = load("Electromagnetic/Measurements/EM_Measurement_Data/LightTouch_PulsedEMData.mat");
@@ -134,26 +138,43 @@ plot(x,coil_force);
 hold on;
 plot(x,core_force);
 plot(x,elastic_force);
-plot(x,finger_force);
-plot(x,gravity_force);
+%plot(x,finger_force);
+%plot(x,gravity_force);
 hold off;
 xlim([x(1),x(end)]);
-legend(["F_{coil}","F_{core}","F_{elastic}","F_{finger}","F_g"])
-title("Static Forces")
+%legend(["F_{coil}","F_{core}","F_{elastic}","F_{finger}","F_g"])
+legend(["F_{coil}","F_{core}","F_{elastic}"])
+title("Primary Forces on Magnet")
 xlabel("Distance Between Magnet and Inductor (mm)")
 ylabel("Force (mN)")
 
+% figure;
+% plot(x,off_force);
+% hold on;
+% plot(x,on_force);
+% xline(x(idx_1))
+% xline(x(idx_2),'r--')
+% xline(x_stop)
+% hold off;
+% xlim([x(1),x(end)]);
+% legend(["F_{off}","F_{on}"])
+% xlabel("Distance Between Magnet and Inductor (mm)")
+% ylabel("Force (mN)")
+% title("Cumulative Force on Magnet")
+
 figure;
-plot(x,off_force);
+plot(x,core_force+elastic_force);
 hold on;
-plot(x,on_force);
+plot(x,coil_force+core_force+elastic_force);
 xline(x(idx_1))
-xline(x(idx_2))
+xline(x_finger,'r--')
+xline(x_stop)
 hold off;
 xlim([x(1),x(end)]);
-legend(["Down Stroke","Up Stroke"])
+legend(["F_{off}","F_{on}"])
 xlabel("Distance Between Magnet and Inductor (mm)")
 ylabel("Force (mN)")
+title("Cumulative Force on Magnet")
 
 
 disp(strcat("Upstroke Energy: ",num2str(sum(on_force(idx_1:idx_2)*x_spacing/1000))," mJ"));

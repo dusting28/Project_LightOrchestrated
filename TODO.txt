@@ -1,21 +1,27 @@
 TODO:
 
-1. Finish Design
-	Figure out time constant on response time (data vs model)
-	Explore membrane elastomer (depends on shielding)
-	Shielding analysis with Max
-	Thermal analysis with Cole
-2. Fabricate Single Pixel
-	Magnetic shielding fabrication (Paul)
-	PTFE guide
-	Aluminum heat sink
-	Thermal Measurements
-3. 3x3 Array
-	Solder SMT components
-	Get high-speed video monitor
-	Screws
-	Optical cavity
-	Magnetic shielding fabrication
-	PTFE guide
-	Aluminum heat sink
-	Electrical analysis with Jeptha (change out gate resistor?)
+1. Design
+	Determine what to do about mechanical stop (elastic element)
+	Determine what to do about tactor / touch surface
+	Driving signal electronics
+
+2. Characterization
+	Proportial Control
+		Determine light intensity from LED
+		Measure voltage for control signal
+		Measure current across inductor
+		Measure actuator displacement
+	Thermal analysis
+		500 ms pulse (compare new heat sink to old)
+		Continuous pulses (with and without heat sink)
+
+3. 10x10 Array Fabrication
+	Fabricate linear guide
+	Fabricate optical cavity (couple to monitor)
+	Add mechanical stops
+	Solder green connectors
+	Assemble magnets/tactors
+	Assemble whole system
+	
+4. User Study
+	Stage photos of potential applications
