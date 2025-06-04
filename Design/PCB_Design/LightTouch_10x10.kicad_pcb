@@ -160606,8 +160606,8 @@
 		(uuid "d4fe2838-e89c-45d7-a68f-dce7dc80ed4f")
 	)
 	(gr_circle
-		(center 216 32)
-		(end 217.7 32)
+		(center 216 29)
+		(end 217.7 29)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -160617,8 +160617,8 @@
 		(uuid "db11baea-7207-48c3-8226-a7aecee8955a")
 	)
 	(gr_circle
-		(center 106 32)
-		(end 107.7 32)
+		(center 106 29)
+		(end 107.7 29)
 		(stroke
 			(width 0.05)
 			(type solid)
