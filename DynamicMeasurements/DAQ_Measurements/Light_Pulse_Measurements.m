@@ -7,9 +7,9 @@ warning('off', 'all');
 
 MeasurementSignal.nReps = 1;
 MeasurementSignal.fs = 5000;
-MeasurementSignal.len = 30;
+MeasurementSignal.len = 140;
 % MeasurementSignal.videoFile = "LED_Pulse";
-filename = "ThermalPulseTrain_10Hz_17ms";
+filename = "ThermalPulse_120s_2000mV";
 MeasurementSignal.laserLower = -10;
 MeasurementSignal.laserUpper = 10;
 
