@@ -1,26 +1,27 @@
 TODO:
 
 1. Design
-	Solve jamming issue. Decrease linear guide diameter?
 	Driving signal electronics
+		Capacitive buffering
+		Blow fuse
 
 2. Characterization
-	Proportial Control
+	Thermal Data
+		Fit Data
+	Mechanical Data
 		Determine light intensity from LED
-		Measure voltage for control signal
-		Measure current across inductor
-		Measure actuator displacement
-	Thermal analysis
-		500 ms pulse (compare new heat sink to old)
-		Continuous pulses (with and without heat sink)
+		Measure moving mass (scale in Carlini lab)
+		Recapture data (24V? and new heat sink / linear guide)
+			Gate voltate, inductor current, inductor voltage?, displacement, velocity (LDV)?
+		Recapture quasi-static forces with 24 V
 
-3. 10x10 Array Fabrication
-	Fabricate linear guide
-	Fabricate optical cavity (couple to monitor)
-	Add mechanical stops
-	Solder green connectors
-	Assemble magnets/tactors
-	Assemble whole system
-	
+3. Fabrication
+	10x10 Testing
+		Add elastic elements
+		Fabricate thermal pads (buy on digikey)
+		Assemble whole system
+	Assemble pulsed electronic system
+		
 4. User Study
+	Finish monitor stand
 	Stage photos of potential applications

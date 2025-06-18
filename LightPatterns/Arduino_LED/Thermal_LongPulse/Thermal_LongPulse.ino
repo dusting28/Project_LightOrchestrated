@@ -6,8 +6,11 @@ void setup() {
 }
 
 void loop() {
-  analogWrite(ledPin, 255);
-  delay(120000);
-  analogWrite(ledPin, 0);
+  for (int i = 0; i <= 600; i++) {
+    analogWrite(ledPin, 255);
+    delay(17);
+    analogWrite(ledPin, 0);
+    delay(150);
+  }
   delay(600000);
 }

@@ -3,37 +3,27 @@ clc; clear; close all;
 addpath("DAQ_Data")
 
 %% Proportional Control
+proportionalData = load(strcat("LED_DecreasingPulses_Velocity_24V.mat"));
+
 num_pulses = 100;
-num_trials = 3;
-pulse_len = .03;
+num_trials = proportionalData.MeasurementSignal.nReps;
+fs = proportionalData.MeasurementSignal.fs;
+pulse_len = .017;
 spacing = .9992;
-start_vec = [3.015*10^4, 2.65*10^4, 2.55*10^4];
 contact_height = 2.4250;
 
 gateVoltage = zeros(num_pulses,num_trials);
 inductorCurrent = zeros(num_pulses,num_trials);
-tactorEnergy = zeros(num_pulses,num_trials);
+displacement = zeros(num_pulses,num_trials); 
+tactorEnergy = zeros(num_pulses,num_trials);  
 
 for iter0 = 1:num_trials
-    
-    proportionalData = load(strcat("DAQ_Data\LED_DecreasingPulses_9x9_ElasticStop_Trial",...
-        num2str(iter0+1),".mat"));
-    voltageData = proportionalData.MeasurementSignal.signals{1};
-    fs = proportionalData.MeasurementSignal.fs;
+    voltageData = proportionalData.MeasurementSignal.signals{iter0};
     t = (1:size(voltageData,1))/fs;
-    
-    figure;
-    subplot(1,3,1);
-    plot(voltageData(:,3));
-    subplot(1,3,2);
-    plot(voltageData(:,1)/.22);
-    subplot(1,3,3);
-    plot(-voltageData(:,2));
-    
-    start_idx = start_vec(iter0);
+
+    start_idx = find(voltageData(:,3) > 1, 1, 'first') - round(pulse_len*fs);
     period = (spacing+pulse_len)*fs;
 
-    
     chop_idx = linspace(start_idx,start_idx+period*(num_pulses-1),num_pulses);
     chop_width = round(3*pulse_len*fs);
     
@@ -54,7 +44,7 @@ for iter0 = 1:num_trials
     
     t_chop = t(1:chop_width);
     
-    plot_idx = 1;
+    plot_idx = 5*(iter0-1)+50;
     
     figure;
     subplot(3,1,1);
@@ -80,32 +70,42 @@ for iter0 = 1:num_trials
             velocity = 0;
         end
         tactorEnergy(iter1,iter0) = (velocity/1000)^2*tactor_mass;
+        displacement(iter1,iter0) = max(chopped_data(2,flipped_iter,:));
     end
 end
 
 figure;
-% for iter1 = 1:num_trials
-%     plot(gateVoltage(:,iter1),"k.");
-%     hold on;
-% end
+for iter1 = 1:num_trials
+    plot(gateVoltage(:,iter1),"k.");
+    hold on;
+end
 plot(median(gateVoltage,2),"r.");
 xlabel("LED Intensity*")
 ylabel("Gate Voltage (V)")
 
 figure;
-% for iter1 = 1:num_trials
-%     plot(inductorCurrent(:,iter1),"k.");
-%     hold on;
-% end
+for iter1 = 1:num_trials
+    plot(inductorCurrent(:,iter1),"k.");
+    hold on;
+end
 plot(median(inductorCurrent,2),"r.");
 xlabel("LED Intensity*")
 ylabel("Inductor Current (A)")
 
 figure;
-% for iter1 = 1:num_trials
-%     plot(tactorEnergy(:,iter1),"k.");
-%     hold on;
-% end
+for iter1 = 1:num_trials
+    plot(displacement(:,iter1),"k.");
+    hold on;
+end
+plot(median(displacement,2),"r.");
+xlabel("LED Intensity*")
+ylabel("Displacement (mm)")
+
+figure;
+for iter1 = 1:num_trials
+    plot(tactorEnergy(:,iter1),"k.");
+    hold on;
+end
 plot(median(tactorEnergy,2),"r.");
 xlabel("LED Intensity*")
 ylabel("Tactor Energy (mJ)")

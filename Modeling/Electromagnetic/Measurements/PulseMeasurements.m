@@ -11,7 +11,7 @@ ForceData.numMeasurements = 25;
 ForceData.spacing = 2500;
 ForceData.spacing = ForceData.spacing * (1/10000);  % convert to mm
 ForceData.triggerVoltage = [10];
-ForceData.powerVoltage = 20;
+ForceData.powerVoltage = 24;
 ForceData.inductorID = "32";
 ForceData.movingMass = "Magnet3x4"; % Magnet or Iron
 

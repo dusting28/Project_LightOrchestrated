@@ -5,11 +5,12 @@
 clc; clear; close all;
 warning('off', 'all');
 
-MeasurementSignal.nReps = 1;
+MeasurementSignal.nReps = 5;
 MeasurementSignal.fs = 5000;
-MeasurementSignal.len = 140;
+MeasurementSignal.len = 120;
+MeasurementSignal.repSpace = 600;
 % MeasurementSignal.videoFile = "LED_Pulse";
-filename = "ThermalPulse_120s_2000mV";
+filename = "LED_DecreasingPulses_Velocity_24V";
 MeasurementSignal.laserLower = -10;
 MeasurementSignal.laserUpper = 10;
 
@@ -41,13 +42,15 @@ for iter = 1:MeasurementSignal.nReps
    
     figure(1);
     subplot(1,3,1);
-    plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,1)/.22);
-    subplot(1,3,2);
-    plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,2));
-    subplot(1,3,3);
     plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,3));
+    subplot(1,3,2);
+    plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,1)/.22);
+    subplot(1,3,3);
+    plot((1:size(recordedData,1))/MeasurementSignal.fs,recordedData(:,2));
 
     fprintf('Completed Trial %i\n',iter);
+
+    pause(MeasurementSignal.repSpace-18);
 end
 
 %% Save
