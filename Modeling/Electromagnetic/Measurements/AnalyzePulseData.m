@@ -3,7 +3,7 @@ clc; clear; close all;
 
 %% Inductor 32 - 20 V
 
-load("Data/PulsedBig_Inductor32_Magnet3x4.mat")
+load("PulsedBig_Inductor32_MagnetD1020.mat")
 
 x = (0:ForceData.numMeasurements-1)*ForceData.spacing;
     

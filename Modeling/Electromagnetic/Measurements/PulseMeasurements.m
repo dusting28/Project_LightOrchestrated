@@ -13,7 +13,7 @@ ForceData.spacing = ForceData.spacing * (1/10000);  % convert to mm
 ForceData.triggerVoltage = [10];
 ForceData.powerVoltage = 24;
 ForceData.inductorID = "32";
-ForceData.movingMass = "Magnet3x4"; % Magnet or Iron
+ForceData.movingMass = "MagnetD1020"; % Magnet or Iron
 
 %% NI Card Setup
 dev_num = 'Dev1';
@@ -80,7 +80,7 @@ for iter1 = 1:ForceData.numMeasurements
         plot(movmean(force_data,50));
         hold on;
         write(daq_out,[0,0])
-        pause(1)
+        pause(60)
     end
     hold off;
 
