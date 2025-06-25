@@ -3,7 +3,7 @@
 clc; clear; close all;
 
 %% Load Data
-pulseSpacing = 50;
+pulseSpacing = 100;
 pulsedData = readmatrix(strcat(num2str(pulseSpacing),"msSpacing.csv"));
 
 %% Plot Data

@@ -3,9 +3,10 @@ clear; clc; close all;
 
 %% Fitted Params from Calibration
 % R_0 = 4.5568;
-alpha = 0.0081;
+alpha = 0.0065;
 % alpha = 0.00393;
 Rs = 0.22;
+T_0 = 21.7;
 
 %% Load Long Pulses
 type = ["HeatSink", "Air"];
@@ -31,10 +32,9 @@ for iter1 = 1:length(type)
         current = voltageData{iter2}(start_idx:end_idx,1)./Rs;
         resistance = 24./current - Rs;
 
-        R_initial = resistance(50);
-        R_0 = R_initial/(21.7*alpha + 1);
+        R_0 = resistance(50);
 
-        temperatures{iter1}(iter2,:) = (resistance/R_0 - 1)/alpha;
+        temperatures{iter1}(iter2,:) = (resistance/R_0 - 1)/alpha + T_0;
     end
     plot(t,median(temperatures{iter1},1),color(iter1))
     hold on;
@@ -74,10 +74,9 @@ for iter1 = 1:length(type)
         current = max_voltage/Rs;
         resistance = 24./current - Rs;
 
-        R_initial = resistance(1);
-        R_0 = R_initial/(21.7*alpha + 1);
+        R_0 = resistance(1);
 
-        temperatures{iter1}(iter2,:) = (resistance/R_0 - 1)/alpha;
+        temperatures{iter1}(iter2,:) = (resistance/R_0 - 1)/alpha + T_0;
     end
     plot(t,temperatures{iter1}(1,:))
     hold on;
@@ -85,6 +84,3 @@ end
 ylabel("Temperature (C)")
 xlabel("Time (s)")
 title("Pulse Train: 17 ms pulses with 150 ms spacing");
-
-
-

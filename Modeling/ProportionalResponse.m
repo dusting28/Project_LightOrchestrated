@@ -21,20 +21,27 @@ x_stop = heatSink_height-4.8-4;
 %% EM Forces
 EM_COMSOL_Data = readmatrix("Electromagnetic/COMSOL/EM_COMSOL_Data/LightTouch_Unshielded_CurrentSweep.csv");
 
-numCurrent = 78;
+numCurrent = 47;
 EM_x = EM_COMSOL_Data(1:numCurrent:end,1);
-current = -EM_COMSOL_Data(1:numCurrent,2);
+current = EM_COMSOL_Data(1:numCurrent,2);
 
 EM_force = zeros(numCurrent,length(x));
-for iter1 = 1:78
+for iter1 = 1:numCurrent
     EM_force_raw = 1000*EM_COMSOL_Data(iter1:numCurrent:end,3)';
     EM_force(iter1,:) = interp1(EM_x,EM_force_raw,x);
 end
 
+
+%% Shield Force
+Shield_Data = readmatrix("Electromagnetic/COMSOL/EM_COMSOL_Data/LightTouch_ShieldOnly.csv");
+shield_force = interp1(Shield_Data(:,1)',1000*Shield_Data(:,2)',x);
+
 %% Spring Force
 elastic_idx = (elasticHeight-x(1))/x_spacing + 1;
-Elastic_COMSOL_Data = readmatrix("ElasticMember/Elastic_COMSOL_Data/CompressionTest_Ecoflex10_1.5mm.csv");
-elastic_force = [-1000*flipud(Elastic_COMSOL_Data(1:elastic_idx,2));zeros(length(x)-elastic_idx,1)]';
+area = (10^-6)*(pi*(3/2)^2);
+k_elastic = (.5*(1278+80.28)*10^3)*area/(1.5*10^-3);
+elastic_force = zeros(1,length(x));
+elastic_force(1:elastic_idx-1) = k_elastic*(elasticHeight-x(1:elastic_idx-1));
 
 %% Moving Mass
 magnetDiam = 3; %mm
@@ -46,18 +53,19 @@ tactorDiam = 1.5875; % mm
 tactorDensity = 1.41; % g/cm^3
 tactorMass = tactorDensity*(10^(-3))*((tactorDiam/2)^2)*pi*tactorHeight; % g
 moving_mass = magnetMass + tactorMass;
-gravity_force = -9.81*moving_mass; % mN
 
 %% Equilibria Points
-off_force = elastic_force+EM_force(numCurrent,:);
+off_force = elastic_force+EM_force(1,:)+shield_force;
 
 %% Equilibria Points
 start_idx = find(diff(sign(off_force)));
 
+z_eq = cell(numCurrent,1);
 start_force = zeros(numCurrent,1);
 end_force = zeros(numCurrent,1);
 for iter1 = 1:numCurrent
-    total_force = elastic_force+EM_force(iter1,:);
+    total_force = elastic_force+EM_force(iter1,:)+shield_force;
+    z_eq{iter1} = find(diff(sign(total_force)));
     start_force(iter1) = total_force(decouple_idx);
     end_force(iter1) = total_force(finger_idx);
 end
@@ -66,13 +74,14 @@ figure;
 plot(current,start_force);
 hold on;
 plot(current,end_force);
+yline(0)
 
 %% Dynamic Modeling
 response_time = zeros(numCurrent,1);
 energy = zeros(numCurrent,1);
 for iter1 = 1:numCurrent
-    total_force = elastic_force+EM_force(iter1,:);
-    dt = 1/10000000;
+    total_force = elastic_force+EM_force(iter1,:)+shield_force;
+    dt = 1/100000;
     t = 0;
     magnet_x = x(start_idx)/1000;
     magnet_v = 0;
@@ -90,6 +99,7 @@ for iter1 = 1:numCurrent
         a = F / (moving_mass/1000);
         magnet_v = magnet_v + a * dt;
         magnet_x = magnet_x + magnet_v * dt;
+        
     end
     if not(nanFlag)
         response_time(iter1) = 1000*t;
@@ -98,16 +108,17 @@ for iter1 = 1:numCurrent
 end
 
 figure;
-subplot(2,1,1)
 plot(current, energy);
-xlim([current(end),current(1)])
+xlim([current(1),current(end)])
 ylim([0,.2])
+xlim([2.3,4.6])
 xlabel("Current (A)")
 ylabel("Tactor Energy (mJ)")
-subplot(2,1,2)
+
+figure;
 plot(current, response_time);
-xlim([current(end),current(1)])
+xlim([current(1),current(end)])
 ylim([0,5])
+xlim([2.3,4.6])
 xlabel("Current (A)")
 ylabel("Response Time (ms)")
-sgtitle("Proportial Control")

@@ -16,26 +16,19 @@ plot(initial_temp,initial_res,'r.')
 hold on;
 plot(final_temp,final_res,'b.');
 
+%% Find Alpha
 
+delta_T = final_temp-initial_temp;
+ratio_R = final_res./initial_res;
 
-%% Linear Regression
+alpha = (ratio_R-1)./delta_T;
 
-all_temp = [initial_temp;final_temp];
-all_res = [initial_res;final_res];
-
-A_matrix = [ones(length(all_temp),1),all_temp(:)];
-params = A_matrix\all_res;
-
-R_0 = params(1);
-alpha = params(2)/R_0;
-
-disp(R_0)
 disp(alpha)
+disp(mean(alpha))
 
-temp = 0:100;
-res = R_0*(1+alpha*temp);
+T_0 = 21.7;
 
-plot(temp,res,'k--');
-legend("Beginning of Pulse", "End of Pulse", "Fitted Model")
-xlabel("Temperature (C)")
-ylabel("Resistance (ohms)")
+figure;
+plot(final_res, (ratio_R-1)/mean(alpha) + T_0, 'r.');
+hold on;
+plot(final_res, final_temp,'b.');

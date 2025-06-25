@@ -10,7 +10,8 @@ EM_Data = "COMSOL";
 % EM_Data = "Measured";
 
 % Elastic_Data = "Rigid";
-Elastic_Data = "COMSOL";
+% Elastic_Data = "COMSOL";
+Elastic_Data = "Analytical";
 % Elastic_Data = "Measured";
 
 %% Stroke
@@ -21,13 +22,27 @@ tactorHeight = 3.175;
 elasticHeight = 1.5;
 x_finger = heatSink_height+1-4.8-4-tactorHeight;
 x_stop = heatSink_height-4.8-4;
+[~,finger_idx] = min(abs(x-x_finger));
+[~,decouple_idx] = min(abs(x-elasticHeight));
+
+%% Moving Mass
+magnetDiam = 3; %mm
+magnetHeight = 4; %mm
+magnetDensity = 7; %g/cm^3
+magnetMass = magnetDensity*(10^(-3))*((magnetDiam/2)^2)*pi*magnetHeight; % g
+
+tactorDiam = 1.5875; % mm
+tactorDensity = 1.41; % g/cm^3
+tactorMass = tactorDensity*(10^(-3))*((tactorDiam/2)^2)*pi*tactorHeight; % g
+moving_mass = magnetMass + tactorMass;
+gravity_force = -9.81*moving_mass; % mN
 
 %% EM Forces
 if EM_Data == "COMSOL"
     EM_COMSOL_Data = readmatrix("Electromagnetic/COMSOL/EM_COMSOL_Data/LightTouch_Unshielded_CurrentSweep.csv");
-    numCurrent = 78;
-    off_idx = numCurrent;
-    on_idx = 1;
+    numCurrent = 47;
+    off_idx = 1;
+    on_idx = numCurrent;
     EM_x = EM_COMSOL_Data(1:numCurrent:end,1);
     core_force = 1000*EM_COMSOL_Data(off_idx:numCurrent:end,3)';
     core_force = interp1(EM_x,core_force,x);
@@ -49,6 +64,10 @@ elseif EM_Data == "Measured"
     coil_force = interp1(EM_x,coil_force,x);
 end
 
+%% Shield Force
+Shield_Data = readmatrix("Electromagnetic/COMSOL/EM_COMSOL_Data/LightTouch_ShieldOnly.csv");
+shield_force = interp1(Shield_Data(:,1)',1000*Shield_Data(:,2)',x);
+
 %% Spring Force
 elastic_idx = (elasticHeight-x(1))/x_spacing + 1;
 if Elastic_Data == "Rigid"
@@ -57,6 +76,11 @@ if Elastic_Data == "Rigid"
 elseif Elastic_Data == "COMSOL"
     Elastic_COMSOL_Data = readmatrix("ElasticMember/Elastic_COMSOL_Data/CompressionTest_Ecoflex10_1.5mm.csv");
     elastic_force = [-1000*flipud(Elastic_COMSOL_Data(1:elastic_idx,2));zeros(length(x)-elastic_idx,1)]';
+elseif Elastic_Data == "Analytical"
+    area = (10^-6)*(pi*(3/2)^2);
+    k_elastic = (.5*(1278+80.28)*10^3)*area/(1.5*10^-3);
+    elastic_force = zeros(1,length(x));
+    elastic_force(1:elastic_idx-1) = k_elastic*(elasticHeight-x(1:elastic_idx-1));
 elseif Elastic_Data == "Measured"
     Elastic_Measurement_Data = load("ElasticMember/Elastic_Measurement_Data/Elastomer_1.5mm_CompressionTest.mat");
     elastic_force = zeros(Elastic_Measurement_Data.ForceData.numMeasurements,1);
@@ -67,24 +91,13 @@ elseif Elastic_Data == "Measured"
 end
 
 %% Finger Force
-k_finger = (10^5)*(10^-6)*(pi*(2/2)^2)/(5*10^-3); 
+k_finger = (290*(10^3))*(10^-6)*(pi*(1.6/2)^2)/(5*10^-3); 
 finger_force = (x_finger-x)*k_finger;
 finger_force = min(finger_force,0);
 
-%% Moving Mass
-magnetDiam = 3; %mm
-magnetHeight = 4; %mm
-magnetDensity = 7; %g/cm^3
-magnetMass = magnetDensity*(10^(-6))*((magnetDiam/2)^2)*pi*magnetHeight; % g
-
-tactorDiam = 1.5875; % mm
-tactorDensity = 1.41; % g/cm^3
-tactorMass = tactorDensity*(10^(-6))*((tactorDiam/2)^2)*pi*tactorHeight; % g
-moving_mass = magnetMass + tactorMass;
-gravity_force = -9.81*moving_mass; % mN
-
-off_force = elastic_force+finger_force+core_force+gravity_force;
-on_force = elastic_force+finger_force+coil_force+core_force+gravity_force;
+%% Cumulative Force
+off_force = elastic_force+finger_force+core_force+shield_force;
+on_force = elastic_force+finger_force+coil_force+core_force+shield_force;
 
 %% Equilibria Points
 idx_1 = find(diff(sign(off_force)));
@@ -138,15 +151,18 @@ plot(x,coil_force);
 hold on;
 plot(x,core_force);
 plot(x,elastic_force);
-%plot(x,finger_force);
-%plot(x,gravity_force);
+plot(x,finger_force);
+plot(x,shield_force);
+xline(x_finger)
+xline(x_stop)
 hold off;
 xlim([x(1),x(end)]);
-%legend(["F_{coil}","F_{core}","F_{elastic}","F_{finger}","F_g"])
-legend(["F_{coil}","F_{core}","F_{elastic}"])
+ylim([-500, 750]);
+legend(["F_{coil}","F_{core}","F_{elastic}","F_{finger}","F_{shield}"])
 title("Primary Forces on Magnet")
 xlabel("Distance Between Magnet and Inductor (mm)")
 ylabel("Force (mN)")
+
 
 % figure;
 % plot(x,off_force);
@@ -163,19 +179,20 @@ ylabel("Force (mN)")
 % title("Cumulative Force on Magnet")
 
 figure;
-plot(x,core_force+elastic_force);
+plot(x,on_force);
 hold on;
-plot(x,coil_force+core_force+elastic_force);
+plot(x,off_force);
 xline(x(idx_1))
-xline(x_finger,'r--')
+xline(x_finger,'r')
 xline(x_stop)
 hold off;
-xlim([x(1),x(end)]);
+xlim([x(1),4.5]);
 legend(["F_{off}","F_{on}"])
 xlabel("Distance Between Magnet and Inductor (mm)")
 ylabel("Force (mN)")
 title("Cumulative Force on Magnet")
+ylim([-250, 500]);
 
 
-disp(strcat("Upstroke Energy: ",num2str(sum(on_force(idx_1:idx_2)*x_spacing/1000))," mJ"));
-disp(strcat("Downstroke Energy: ",num2str(sum(off_force(idx_1:idx_2)*x_spacing/1000))," mJ"));
+disp(strcat("Upstroke Energy: ",num2str(sum(on_force(idx_1:finger_idx)*x_spacing/1000))," mJ"));
+disp(strcat("Downstroke Energy: ",num2str(sum(off_force(decouple_idx:idx_2)*x_spacing/1000))," mJ"));

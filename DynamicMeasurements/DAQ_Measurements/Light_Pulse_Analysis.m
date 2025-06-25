@@ -3,7 +3,7 @@ clc; clear; close all;
 addpath("DAQ_Data")
 
 %% Proportional Control
-proportionalData = load(strcat("LED_DecreasingPulses_Velocity_24V.mat"));
+proportionalData = load(strcat("DAQ_Data/LED_DecreasingPulses_Velocity_24V.mat"));
 
 num_pulses = 100;
 num_trials = proportionalData.MeasurementSignal.nReps;
@@ -16,6 +16,8 @@ gateVoltage = zeros(num_pulses,num_trials);
 inductorCurrent = zeros(num_pulses,num_trials);
 displacement = zeros(num_pulses,num_trials); 
 tactorEnergy = zeros(num_pulses,num_trials);  
+
+valid_points = [10:80];
 
 for iter0 = 1:num_trials
     voltageData = proportionalData.MeasurementSignal.signals{iter0};
@@ -37,7 +39,8 @@ for iter0 = 1:num_trials
                 chopped_data(iter1,iter2,:) = chopped_data(iter1,iter2,:)/.22;
             end
             if iter1 == 2
-                chopped_data(iter1,iter2,:) = -(2.13)*(chopped_data(iter1,iter2,:)-chopped_data(iter1,iter2,1));
+                % chopped_data(iter1,iter2,:) = -(2.13)*(chopped_data(iter1,iter2,:)-chopped_data(iter1,iter2,1));
+                chopped_data(iter1,iter2,:) = .125*chopped_data(iter1,iter2,:);
             end
         end
     end
@@ -83,32 +86,35 @@ plot(median(gateVoltage,2),"r.");
 xlabel("LED Intensity*")
 ylabel("Gate Voltage (V)")
 
+
+lux = 20*median(gateVoltage(valid_points,:),2);
+
 figure;
 for iter1 = 1:num_trials
-    plot(inductorCurrent(:,iter1),"k.");
+    plot(lux, inductorCurrent(valid_points,iter1),"k.");
     hold on;
 end
-plot(median(inductorCurrent,2),"r.");
+plot(lux, median(inductorCurrent(valid_points,:),2),"r.");
 xlabel("LED Intensity*")
 ylabel("Inductor Current (A)")
 
 figure;
 for iter1 = 1:num_trials
-    plot(displacement(:,iter1),"k.");
+    plot(lux, displacement(valid_points,iter1),"k.");
     hold on;
 end
-plot(median(displacement,2),"r.");
+plot(lux, median(displacement(valid_points,:),2),"r.");
 xlabel("LED Intensity*")
 ylabel("Displacement (mm)")
 
-figure;
-for iter1 = 1:num_trials
-    plot(tactorEnergy(:,iter1),"k.");
-    hold on;
-end
-plot(median(tactorEnergy,2),"r.");
-xlabel("LED Intensity*")
-ylabel("Tactor Energy (mJ)")
+% figure;
+% for iter1 = 1:num_trials
+%     plot(tactorEnergy(:,iter1),"k.");
+%     hold on;
+% end
+% plot(median(tactorEnergy,2),"r.");
+% xlabel("LED Intensity*")
+% ylabel("Tactor Energy (mJ)")
 
 % figure;
 % subplot(1,3,1);
