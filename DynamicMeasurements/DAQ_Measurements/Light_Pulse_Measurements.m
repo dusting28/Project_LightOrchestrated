@@ -10,7 +10,7 @@ MeasurementSignal.fs = 5000;
 MeasurementSignal.len = 120;
 MeasurementSignal.repSpace = 600;
 % MeasurementSignal.videoFile = "LED_Pulse";
-filename = "LED_DecreasingPulses_Velocity_24V";
+filename = "LED_DecreasingPulses_NoShield_Displacement_24V";
 MeasurementSignal.laserLower = -10;
 MeasurementSignal.laserUpper = 10;
 
