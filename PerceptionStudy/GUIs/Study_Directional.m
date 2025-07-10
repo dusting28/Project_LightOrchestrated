@@ -12,7 +12,7 @@ clearvars -except vid src ax
 cla(ax)
 
 %% Randomization
-participantNumber = "02";
+participantNumber = "00";
 
 delays = [0.5, 1];
 

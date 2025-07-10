@@ -14,7 +14,7 @@ cla(ax)
 warning('off', 'all');
 
 %% Randomization
-participantNumber = "02";
+participantNumber = "00";
 
 Locations = [0,10,20,30,40,50,60,70,80,90];
 nLocations = length(Locations);
