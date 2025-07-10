@@ -1,27 +1,44 @@
 TODO:
-
-1. Design
-	Driving signal electronics
-		Capacitive buffering
-		Blow fuse
-
-2. Characterization
-	Thermal Data
-		Fit Data
-	Mechanical Data
-		Determine light intensity from LED
-		Measure moving mass (scale in Carlini lab)
-		Recapture data (24V? and new heat sink / linear guide)
-			Gate voltate, inductor current, inductor voltage?, displacement, velocity (LDV)?
-		Recapture quasi-static forces with 24 V
-
-3. Fabrication
-	10x10 Testing
-		Add elastic elements
-		Fabricate thermal pads (buy on digikey)
-		Assemble whole system
-	Assemble pulsed electronic system
 		
-4. User Study
-	Finish monitor stand
-	Stage photos of potential applications
+1. User Study
+	Run study
+	Analyze data
+	Finish figure
+	Edit text
+2. Collect Demo Documentation
+	Pictures: Cole Images
+	Videos: Cole Interactive Demos
+3. Edit Manuscript
+	Figures:
+		Fig 1:
+			Make color red used for light more vibrant
+			Remove "user" label
+			Remove first frame from subfig C (make light easier to see)
+			Have high-level device archetecture as subfig D (tactile video synthesis)
+				Image-> visual display -> light -> ...
+				optocouple circuit -> control signal -> ...
+				amplification -> actuator driving signal - > ...
+				actuator -> tactile pattern
+		Fig 3
+			Put space on top (break out single actuator for time)
+			Put figure A on bottom (larger time arrow)
+	Text:
+		Abstract
+			See yon comments in text
+		Section I
+			Look for literature outside of haptics (chat gpt deep research)
+		Section II
+			First describe high-level system and highlight advantages
+				Parrallel control
+					Scalable
+				No drivers
+				Modularity (mulitple devices, etc.)
+		General
+			Unify language 
+				impulse, energy, skin displacement, ect.
+				optocoupled driving circuit
+				Remove "LightTouch"
+				change U to T for kinetic energy in figures
+		
+	
+		
