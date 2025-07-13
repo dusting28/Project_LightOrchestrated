@@ -1,44 +1,25 @@
 TODO:
-		
-1. User Study
-	Run study
-	Analyze data
-	Finish figure
-	Edit text
-2. Collect Demo Documentation
-	Pictures: Cole Images
-	Videos: Cole Interactive Demos
-3. Edit Manuscript
-	Figures:
-		Fig 1:
-			Make color red used for light more vibrant
-			Remove "user" label
-			Remove first frame from subfig C (make light easier to see)
-			Have high-level device archetecture as subfig D (tactile video synthesis)
-				Image-> visual display -> light -> ...
-				optocouple circuit -> control signal -> ...
-				amplification -> actuator driving signal - > ...
-				actuator -> tactile pattern
-		Fig 3
-			Put space on top (break out single actuator for time)
-			Put figure A on bottom (larger time arrow)
+
+1. Edit Manuscript
 	Text:
-		Abstract
-			See yon comments in text
 		Section I
-			Look for literature outside of haptics (chat gpt deep research)
-		Section II
-			First describe high-level system and highlight advantages
-				Parrallel control
-					Scalable
-				No drivers
-				Modularity (mulitple devices, etc.)
+			Rework paragraphs 2 and 3 to make shorter/more focused
+				Paragraph 2: requirements for a tactile display
+				Paragraph 3: commodity visual display typically excel at one requirement (smartphone, brail display)
+			Also look at transition to paragraph 4.
 		General
 			Unify language 
 				impulse, energy, skin displacement, ect.
-				optocoupled driving circuit
-				Remove "LightTouch"
-				change U to T for kinetic energy in figures
+
+2. Demos (Cole)
+	Real Demos (show Yon and Maybe Lucas)
+		Dot bouncing around screen
+		Line sweeping across screen
+		Dodging lasers from user
+		Large, static circle
+	Video Documentation
+		Hitting bouncing ball
+		Slow-motion of line sweeping across array
 		
 	
 		
