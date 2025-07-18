@@ -1,17 +1,6 @@
 TODO:
 
-1. Edit Manuscript
-	Text:
-		Section I
-			Rework paragraphs 2 and 3 to make shorter/more focused
-				Paragraph 2: requirements for a tactile display
-				Paragraph 3: commodity visual display typically excel at one requirement (smartphone, brail display)
-			Also look at transition to paragraph 4.
-		General
-			Unify language 
-				impulse, energy, skin displacement, ect.
-
-2. Demos (Cole)
+1. Demos (Cole)
 	Real Demos (show Yon and Maybe Lucas)
 		Dot bouncing around screen
 		Line sweeping across screen

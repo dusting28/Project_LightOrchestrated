@@ -25,12 +25,12 @@ shield_force = 1000*Shield_Data(:,2)';
 %%
 
 figure;
-plot(x1(2:end),core_force_1(2:end));
+plot(x1(2:end),-core_force_1(2:end));
 hold on;
 plot(x1(2:end),coil_force_1(2:end));
 
 figure;
-plot(x2(2:end),core_force_2(2:end));
+plot(x2(2:end),-core_force_2(2:end));
 hold on;
 plot(x2(2:end),coil_force_2(2:end));
 
