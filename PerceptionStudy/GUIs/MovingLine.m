@@ -1,25 +1,6 @@
 %% Dustin Goetz
 clc; clear; close all;
-
-% Clean up previous video objects
-imaqreset;
-delete(imaqfind);
-
 addpath("GUI_Functions\")
-
-%% Setup Camera
-
-% % Create video input object
-% camFormat = 'BGR8';  % Use exact format from imaqhwinfo
-% vid = videoinput('gentl', 1, camFormat);
-% src = getselectedsource(vid);
-% 
-% % Set trigger mode, acquisition, exposure time, etc.
-% triggerconfig(vid, 'immediate');  % Use 'immediate' for debugging
-% vid.FramesPerTrigger = 1;
-% vid.TriggerRepeat = 0;
-% src.ExposureTime = 20000;  % in microseconds
-% src.Gain = 4;
 
 %% Pixel Information
 screens = get(0, 'MonitorPositions');
@@ -27,7 +8,7 @@ monitorID = 2;  % Adjust as needed
 figPos = screens(monitorID, :); 
 
 figureHandle = figure(1);
-set(figureHandle, ...
+set(figureHandle, ... 
     'Color', 'k', ...
     'MenuBar', 'none', ...
     'ToolBar', 'none', ...
@@ -48,4 +29,14 @@ axis(ax, 'manual');
 
 drawnow;
 
-disp("Reminder: Turn on Power Supply and Adjust Participant Number")
+input("Turn On Power Supply and Press Enter:")
+
+%% Loop Through Pixels
+line_width = 43;
+for iter1 = 1:100
+    % Draw current rectangle
+    cla(ax);  % Clear previous
+    linePos = [iter1*line_width, 0, 35.84, 1500];
+    rectangle('Parent', ax, 'Position', linePos, 'FaceColor', 'w', 'EdgeColor', 'none');
+    pause(.02);
+end
