@@ -91,7 +91,7 @@ errors_y = reported_locations(:,:,2)-true_locations(:,:,2);
 closestPixel = round(reported_locations-true_locations);
 
 xError_vector = reshape(errors_x,1,[]);
-yError_vector = reshape(errors_y,1,[]);
+yError_vector = -reshape(errors_y,1,[]);
 totalError_vector = (xError_vector.^2 + yError_vector.^2).^.5;
 
 figure;
@@ -100,6 +100,7 @@ histogram(xError_vector, edges);  % adjust number of bins as needed
 xlabel('Error (cm)');
 ylabel('Count');
 title('Histogram of X Error');
+ylim([0,40]);
 
 figure;
 edges = -1.5:.1:1.5;
@@ -107,6 +108,7 @@ histogram(yError_vector, edges);  % adjust number of bins as needed
 xlabel('Error (cm)');
 ylabel('Count');
 title('Histogram of Y Error');
+ylim([0,40]);
 
 figure;
 edges = 0:.1:1.5;
@@ -166,7 +168,7 @@ confusionchart(C);
 
 % Historgram with Errors
 error = reported_locations(:,:,1)-true_locations(:,:,1);
-error_vector = reshape(error,1,[]);
+error_vector = -reshape(error,1,[]);
 
 edges = -1.5:.1:1.5;
 
