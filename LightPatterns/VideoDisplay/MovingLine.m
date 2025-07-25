@@ -49,6 +49,7 @@ for x = lineXPositions
     drawnow;
     frame = getframe(figureHandle);
     writeVideo(v, frame);
+    writeVideo(v, frame);
 end
 
 close(v);
