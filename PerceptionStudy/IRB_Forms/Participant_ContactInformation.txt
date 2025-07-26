@@ -1,5 +1,7 @@
 Participant Contact Information
 
+Experiments 1-3
+
 03 - Samantha Fernandez s4mfernandez@gmail.com
 04 - Doug Goetz - goetzd@ohio.edu
 05 - Christina Goetz - melaniesaez95@gmail.com
@@ -10,3 +12,12 @@ Participant Contact Information
 10 - Will McGonagle - wilhelmmcgonagle@gmail.com
 11 - Hannah Stone - hstone@ucsb.edu
 12 - John McNutt - mcnutt.99@osu.edu 
+
+Magnitude Study
+
+02 - Stejara Dinulescu - sdinulescu@ucsb.edu
+03 - Yael Carranza - yac@ucsb.edu
+04 - Daniel Goetz - dagoetz9@gmail.com
+05 - Elaine Goetz - elainegoetz@yahoo.com
+06 - Josh Goetz - joshgoetz@g.ucla.edu
+07 - Doug Goetz - goetzd@ohio.edu
