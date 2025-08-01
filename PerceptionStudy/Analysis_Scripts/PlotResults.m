@@ -117,7 +117,11 @@ xlabel('Error (cm)');
 ylabel('Count');
 title('Histogram of Total Error');
 
-disp(strcat("Experiment 2 - Average Error: ", num2str(mean(totalError_vector))));
+disp(strcat("Experiment 2 - Average Absolute Error: ", num2str(mean(totalError_vector))));
+disp(strcat("Experiment 2 - Average X-Error: ", num2str(mean(xError_vector))));
+disp(strcat("Experiment 2 - Standard Deviation of  X-Error: ", num2str(std(xError_vector))));
+disp(strcat("Experiment 2 - Average Y-Error: ", num2str(mean(yError_vector))));
+disp(strcat("Experiment 2 - Sandard Deviation of Y-Error: ", num2str(std(yError_vector))));
 
 
 %% Experiment 3
@@ -177,4 +181,6 @@ xlabel('Error (cm)');
 ylabel('Count');
 title('Histogram of Error');
 
-disp(strcat("Experiment 3 - Average Error: ", num2str(mean(abs(error_vector)))));
+disp(strcat("Experiment 3 - Average Absolute Error: ", num2str(mean(abs(error_vector)))));
+disp(strcat("Experiment 3 - Average Error: ", num2str(mean(error_vector))));
+disp(strcat("Experiment 3 - Standard Deviation of Error: ", num2str(std(error_vector))));
